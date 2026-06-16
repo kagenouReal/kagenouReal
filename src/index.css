@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Mono", "JetBrains Mono", ui-monospace, monospace;
+  
+  --color-brand: var(--color-brand);
+  --color-brand-soft: var(--color-brand-soft);
+  --color-brand-glow: var(--color-brand-glow);
+  --color-bg-main: var(--color-bg-main);
+  --color-bg-sub: var(--color-bg-sub);
+  --color-text-main: var(--color-text-main);
+  --color-text-muted: var(--color-text-muted);
+  --color-border-subtle: var(--color-border-subtle);
+  --color-card-bg: var(--color-card-bg);
+  --color-card-hover: var(--color-card-hover);
+}
+
+:root {
+  --color-brand: #8b9d77;
+  --color-brand-soft: #a3b18a;
+  --color-brand-glow: rgba(139, 157, 119, 0.2);
+  --color-bg-main: #fdfaf5;
+  --color-bg-sub: #f5f1e9;
+  --color-text-main: #4a4435;
+  --color-text-muted: rgba(74, 68, 53, 0.7);
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-card-bg: rgba(139, 157, 119, 0.08);
+  --color-card-hover: rgba(139, 157, 119, 0.15);
+}
+
+.dark {
+  --color-brand: #a3b18a;
+  --color-brand-soft: #8b9d77;
+  --color-brand-glow: rgba(163, 177, 138, 0.2);
+  --color-bg-main: #0d0e0c;
+  --color-bg-sub: #151712;
+  --color-text-main: #e3e3dc;
+  --color-text-muted: rgba(227, 227, 220, 0.7);
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border-strong: rgba(255, 255, 255, 0.12);
+  --color-card-bg: rgba(255, 255, 255, 0.03);
+  --color-card-hover: rgba(163, 177, 138, 0.1);
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-bg-main text-text-main antialiased scroll-pt-24 transition-colors duration-500;
+    scroll-behavior: smooth;
+    background-image: 
+      linear-gradient(to right, var(--color-border-subtle) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-border-subtle) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-color: var(--color-bg-main);
+  }
+}
+
+@layer utilities {
+  .tech-border {
+    @apply border border-slate-200 bg-white/80 backdrop-blur-sm;
+  }
+  .code-text {
+    @apply font-mono text-sm tracking-tight;
+  }
+}
