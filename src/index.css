@@ -52,7 +52,7 @@ scroll-behavior: smooth;
 
 @layer utilities {
 .tech-border {
-@apply border border-slate-200 bg-white/80 backdrop-blur-sm;
+@apply border border-slate-200 bg-white/80;
 }
 .code-text {
 @apply font-mono text-sm tracking-tight;

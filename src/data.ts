@@ -9,11 +9,6 @@ export const SKILLS = [
 { name: "Flutter", pct: 65, cat: "Framework", icon: "⬢" },
 ];
 
-export const STATS = [
-{ val: "10+", label: "Projects" },
-{ val: "8 Yrs", label: "Self-Taught" },
-];
-
 export const PROJECTS = [
 {
 title: "Zqwis - Frontend",

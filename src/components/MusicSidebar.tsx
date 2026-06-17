@@ -52,7 +52,7 @@ backgroundSize: '40px 40px',
 
 {/* Dynamic Background Blur */}
 <div className="absolute inset-0 z-0 opacity-20 overflow-hidden">
-<img src={currentTrack.cover} className="w-full h-full object-cover blur-3xl scale-150" alt="" />
+<img src={currentTrack.cover} className="w-full h-full object-cover scale-150" alt="" />
 <div className="absolute inset-0 bg-gradient-to-b from-bg-main/80 to-bg-main" />
 </div>
 

@@ -26,7 +26,7 @@ if (isDarkMode) { document.documentElement.classList.remove('dark'); localStorag
 };
 return (
 <>
-<motion.nav className="sticky top-0 z-50 backdrop-blur-md bg-bg-main/40 border-b border-border-subtle/30 will-change-transform" style={{ boxShadow: shadow }} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}>
+<motion.nav className="sticky top-0 z-50 bg-bg-main border-b border-border-subtle/30 will-change-transform" style={{ boxShadow: shadow }} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}>
 <div className="max-w-[1000px] mx-auto px-6 md:px-10 py-4 flex justify-between items-center z-10 relative">
 <motion.div className="text-[1.1rem] font-bold font-mono tracking-tighter flex items-center gap-1 group cursor-pointer" whileHover={{ scale: 1.05 }}><span className="text-brand text-[1.15rem]">//</span><span className="text-text-main group-hover:text-brand transition-colors">kagenou_</span></motion.div>
 <div className="flex items-center gap-4 md:gap-8">
@@ -114,7 +114,7 @@ export function BackToTop() {
 const [isVisible, setIsVisible] = useState(false);
 useEffect(() => { const handleScroll = () => { if (window.scrollY > 500) setIsVisible(true); else setIsVisible(false); }; window.addEventListener('scroll', handleScroll); handleScroll(); return () => window.removeEventListener('scroll', handleScroll); }, []);
 return (
-<AnimatePresence>{isVisible && <motion.button initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: 20 }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="fixed bottom-7 right-7 z-[90] p-3 rounded-full bg-card-bg border border-border-subtle shadow-xl backdrop-blur-md text-text-muted hover:text-brand transition-colors" whileHover={{ y: -3, boxShadow: '0 8px 32px var(--color-brand-glow)' }} whileTap={{ scale: 0.95 }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></motion.button>}</AnimatePresence>
+<AnimatePresence>{isVisible && <motion.button initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: 20 }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="fixed bottom-7 right-7 z-[90] p-3 rounded-full bg-card-bg border border-border-subtle shadow-xl text-text-muted hover:text-brand transition-colors" whileHover={{ y: -3, boxShadow: '0 8px 32px var(--color-brand-glow)' }} whileTap={{ scale: 0.95 }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></motion.button>}</AnimatePresence>
 );
 }
 

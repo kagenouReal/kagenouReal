@@ -108,8 +108,8 @@ ease: "easeInOut"
 }}
 className="relative group will-change-transform"
 >
-<div className="absolute -inset-1 bg-gradient-to-r from-brand to-brand-soft rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-<div className="relative bg-card-bg backdrop-blur-xl border border-brand rounded-xl shadow-2xl overflow-hidden font-mono text-[0.7rem] text-text-muted">
+<div className="absolute -inset-1 bg-gradient-to-r from-brand to-brand-soft rounded-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+<div className="relative bg-card-bg border border-brand rounded-xl shadow-2xl overflow-hidden font-mono text-[0.7rem] text-text-muted">
 <div className="flex items-center gap-2 px-4 py-3 border-b border-brand bg-bg-sub/50">
 <div className="flex gap-1.5">
 <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
