@@ -2,59 +2,59 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Space Mono", "JetBrains Mono", ui-monospace, monospace;
-  
-  --color-brand: var(--color-brand);
-  --color-brand-soft: var(--color-brand-soft);
-  --color-brand-glow: var(--color-brand-glow);
-  --color-bg-main: var(--color-bg-main);
-  --color-bg-sub: var(--color-bg-sub);
-  --color-text-main: var(--color-text-main);
-  --color-text-muted: var(--color-text-muted);
-  --color-border-subtle: var(--color-border-subtle);
-  --color-card-bg: var(--color-card-bg);
-  --color-card-hover: var(--color-card-hover);
+--font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+--font-mono: "Space Mono", "JetBrains Mono", ui-monospace, monospace;
+
+--color-brand: var(--color-brand);
+--color-brand-soft: var(--color-brand-soft);
+--color-brand-glow: var(--color-brand-glow);
+--color-bg-main: var(--color-bg-main);
+--color-bg-sub: var(--color-bg-sub);
+--color-text-main: var(--color-text-main);
+--color-text-muted: var(--color-text-muted);
+--color-border-subtle: var(--color-border-subtle);
+--color-card-bg: var(--color-card-bg);
+--color-card-hover: var(--color-card-hover);
 }
 
 :root {
-  --color-brand: #8b9d77;
-  --color-brand-soft: #d1d9c5;
-  --color-brand-glow: rgba(139, 157, 119, 0.15);
-  --color-bg-main: #fdfaf5;
-  --color-bg-sub: #f6f3eb;
-  --color-text-main: #4a4435;
-  --color-text-muted: rgba(74, 68, 53, 0.65);
-  --color-border-subtle: rgba(0, 0, 0, 0.05);
-  --color-card-bg: rgba(255, 255, 255, 0.6);
-  --color-card-hover: rgba(139, 157, 119, 0.08);
+--color-brand: #8b9d77;
+--color-brand-soft: #d1d9c5;
+--color-brand-glow: rgba(139, 157, 119, 0.15);
+--color-bg-main: #fdfaf5;
+--color-bg-sub: #f6f3eb;
+--color-text-main: #4a4435;
+--color-text-muted: rgba(74, 68, 53, 0.65);
+--color-border-subtle: rgba(0, 0, 0, 0.05);
+--color-card-bg: rgba(255, 255, 255, 0.6);
+--color-card-hover: rgba(139, 157, 119, 0.08);
 }
 
 .dark {
-  --color-brand: #a3b18a;
-  --color-brand-soft: #4a553f;
-  --color-brand-glow: rgba(163, 177, 138, 0.15);
-  --color-bg-main: #0a0b09;
-  --color-bg-sub: #11130f;
-  --color-text-main: #e8e8e1;
-  --color-text-muted: rgba(232, 232, 225, 0.6);
-  --color-border-subtle: rgba(255, 255, 255, 0.04);
-  --color-card-bg: rgba(255, 255, 255, 0.02);
-  --color-card-hover: rgba(163, 177, 138, 0.06);
+--color-brand: #a3b18a;
+--color-brand-soft: #4a553f;
+--color-brand-glow: rgba(163, 177, 138, 0.15);
+--color-bg-main: #0a0b09;
+--color-bg-sub: #11130f;
+--color-text-main: #e8e8e1;
+--color-text-muted: rgba(232, 232, 225, 0.6);
+--color-border-subtle: rgba(255, 255, 255, 0.04);
+--color-card-bg: rgba(255, 255, 255, 0.02);
+--color-card-hover: rgba(163, 177, 138, 0.06);
 }
 
 @layer base {
-  body {
-    @apply font-sans bg-bg-main text-text-main antialiased selection:bg-brand/20;
-    scroll-behavior: smooth;
-  }
+body {
+@apply font-sans bg-bg-main text-text-main antialiased selection:bg-brand/20;
+scroll-behavior: smooth;
+}
 }
 
 @layer utilities {
-  .tech-border {
-    @apply border border-slate-200 bg-white/80 backdrop-blur-sm;
-  }
-  .code-text {
-    @apply font-mono text-sm tracking-tight;
-  }
+.tech-border {
+@apply border border-slate-200 bg-white/80 backdrop-blur-sm;
+}
+.code-text {
+@apply font-mono text-sm tracking-tight;
+}
 }
