@@ -56,99 +56,96 @@ opacity: 0.06
 );
 }
 
-export function DynamicBackground() {
-const canvasRef = useRef<HTMLCanvasElement>(null);
+export function DynamicBackground({ paused }: { paused: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-useEffect(() => {
-const canvas = canvasRef.current;
-if (!canvas) return;
-const ctx = canvas.getContext('2d', { alpha: true });
-if (!ctx) return;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
 
-let width = window.innerWidth;
-let height = window.innerHeight;
-canvas.width = width;
-canvas.height = height;
+    if (paused) return; // Stop animation if paused
 
-const isLowEnd = width < 768 || (typeof navigator !== 'undefined' && (navigator as any).hardwareConcurrency < 4);
-const particles: { x: number; y: number; vx: number; vy: number }[] = [];
-const count = isLowEnd ? 15 : 40;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
-for (let i = 0; i < count; i++) {
-particles.push({
-x: Math.random() * width,
-y: Math.random() * height,
-vx: (Math.random() - 0.5) * 0.3,
-vy: (Math.random() - 0.5) * 0.3,
-});
-}
+    const isLowEnd = width < 768 || (typeof navigator !== 'undefined' && (navigator as any).hardwareConcurrency < 4);
+    const particles: { x: number; y: number; vx: number; vy: number }[] = [];
+    const count = isLowEnd ? 15 : 40;
 
-let animationFrameId: number;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+      });
+    }
 
-const draw = () => {
-ctx.clearRect(0, 0, width, height);
-const brandColor = getComputedStyle(document.documentElement).getPropertyValue('--color-brand').trim();
-ctx.fillStyle = `${brandColor}30`;
-ctx.lineWidth = 0.5;
+    let animationFrameId: number;
 
-for (let i = 0; i < particles.length; i++) {
-const p = particles[i];
-p.x += p.vx;
-p.y += p.vy;
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+      const brandColor = getComputedStyle(document.documentElement).getPropertyValue('--color-brand').trim();
+      ctx.fillStyle = `${brandColor}30`;
+      ctx.lineWidth = 0.5;
 
-if (p.x < 0) p.x = width;
-if (p.x > width) p.x = 0;
-if (p.y < 0) p.y = height;
-if (p.y > height) p.y = 0;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
 
-ctx.beginPath();
-ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
-ctx.fill();
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
 
-if (!isLowEnd) {
-for (let j = i + 1; j < particles.length; j++) {
-const p2 = particles[j];
-const dx = p.x - p2.x;
-const dy = p.y - p2.y;
-const distSq = dx * dx + dy * dy;
-if (distSq < 15000) {
-ctx.beginPath();
-ctx.strokeStyle = `${brandColor}${Math.floor((1 - Math.sqrt(distSq) / 122) * 20).toString(16).padStart(2, '0')}`;
-ctx.moveTo(p.x, p.y);
-ctx.lineTo(p2.x, p2.y);
-ctx.stroke();
-}
-}
-}
-}
-animationFrameId = requestAnimationFrame(draw);
-};
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+        ctx.fill();
 
-draw();
-let resizeTimeout: any;
-const handleResize = () => {
-clearTimeout(resizeTimeout);
-resizeTimeout = setTimeout(() => {
-width = window.innerWidth;
-height = window.innerHeight;
-canvas.width = width;
-canvas.height = height;
-}, 200);
-};
-window.addEventListener('resize', handleResize, { passive: true });
-return () => {
-window.removeEventListener('resize', handleResize);
-cancelAnimationFrame(animationFrameId);
-clearTimeout(resizeTimeout);
-};
-}, []);
+        if (!isLowEnd) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const distSq = dx * dx + dy * dy;
+            if (distSq < 15000) {
+              ctx.beginPath();
+              ctx.strokeStyle = `${brandColor}${Math.floor((1 - Math.sqrt(distSq) / 122) * 20).toString(16).padStart(2, '0')}`;
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+      animationFrameId = requestAnimationFrame(draw);
+    };
 
-return (
-<canvas
-ref={canvasRef}
-className="fixed inset-0 z-[-2] pointer-events-none opacity-40 mix-blend-multiply dark:mix-blend-screen"
-/>
-);
+    draw();
+    let resizeTimeout: any;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+      }, 200);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [paused]);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-[-1] pointer-events-none" />;
 }
 
 export function Glitch({ text }: { text: string }) {
