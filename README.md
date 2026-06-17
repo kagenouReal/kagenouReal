@@ -2,10 +2,10 @@
 
 # Kagenou
 
-backend · frontend · shipping things
+Vibe Coder — backend · frontend
 
 <img
-src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=3500&pause=1000&color=8B9D77&center=true&vCenter=true&width=500&height=35&lines=Building+cool+stuff;Node.js+%2F+Next.js+%2F+Flutter;Always+learning"
+src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=3500&pause=1000&color=8B9D77&center=true&vCenter=true&width=500&height=35&lines=Always+learning"
 />
 
 <a href="https://aboutkagenou.vercel.app">
