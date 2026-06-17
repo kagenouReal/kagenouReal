@@ -19,10 +19,10 @@ export const PROJECTS = [
     title: "Zqwis - Frontend",
     desc: "A sleek cross-platform mobile application developed with Flutter and Dart. It serves as the primary interface for the Zqwis API ecosystem, featuring real-time monitoring, state management with Provider, and smooth animations. Supports complex data visualization and secure API key management.",
     tags: ["Flutter", "Dart", "Dio"],
-    category: "Mobile",
+    category: "Frontend",
     icon: "⬡",
     highlight: true,
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80",
+    image: "/sample.jpg",
     github: "https://github.com/kagenouReal/zqwis-mobile"
   },
   {
@@ -32,7 +32,7 @@ desc: "A REST API ecosystem built with Next.js and TypeScript. Features bot auto
     category: "Backend",
     icon: "⬡",
     highlight: true,
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+    image: "/sample.jpg",
     github: "https://github.com/kagenouReal/Zqwis-Apis-Backend"
   }
 ];

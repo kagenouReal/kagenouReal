@@ -79,82 +79,72 @@ export default function MusicSidebar({ isOpen, onClose }: MusicPlayerProps) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full max-w-xs bg-bg-main border-l border-border-subtle shadow-2xl z-[101] flex flex-col"
+              className="fixed top-0 right-0 h-full w-full max-w-[280px] bg-bg-main border-l border-border-subtle shadow-2xl z-[101] flex flex-col"
             >
-              <div className="p-6 border-b border-border-subtle flex justify-between items-center">
+              <div className="p-4 border-b border-border-subtle flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-brand/10 rounded-lg flex items-center justify-center text-brand">
-                    <Play size={16} fill="currentColor" />
+                  <div className="w-7 h-7 bg-brand/10 rounded-lg flex items-center justify-center text-brand">
+                    <Play size={14} fill="currentColor" />
                   </div>
-                  <h2 className="font-mono text-sm font-bold uppercase tracking-widest">Music Player</h2>
+                  <h2 className="font-mono text-[0.7rem] font-bold uppercase tracking-widest">Music Player</h2>
                 </div>
-                <button onClick={onClose} className="p-2 hover:bg-card-bg rounded-full transition-colors">
-                  <ChevronRight size={20} className="text-text-muted" />
+                <button onClick={onClose} className="p-1.5 hover:bg-card-bg rounded-full transition-colors">
+                  <ChevronRight size={18} className="text-text-muted" />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8">
+              <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
                 {/* Current Track Info */}
-                <div className="flex flex-col items-center text-center gap-4">
+                <div className="flex flex-col items-center text-center gap-3">
                   <motion.div 
                     animate={isPlaying ? { rotate: 360 } : {}} 
-                    transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-                    className="w-48 h-48 rounded-full overflow-hidden border-4 border-card-bg shadow-xl"
+                    transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
+                    className="w-32 h-32 rounded-full overflow-hidden border-2 border-card-bg shadow-lg will-change-transform"
                   >
                     <img src={currentTrack.cover} alt="" className="w-full h-full object-cover" />
                   </motion.div>
                   
                   <div>
-                    <h3 className="text-lg font-bold text-text-main leading-tight mb-1">{currentTrack.title}</h3>
-                    <p className="text-xs text-brand font-mono uppercase tracking-[0.2em]">{currentTrack.artist}</p>
+                    <h3 className="text-sm font-bold text-text-main leading-tight mb-1">{currentTrack.title}</h3>
+                    <p className="text-[0.6rem] text-brand font-mono uppercase tracking-[0.2em]">{currentTrack.artist}</p>
                   </div>
                 </div>
 
                 {/* Controls */}
-                <div className="flex flex-col gap-4">
-                  <div className="h-1.5 w-full bg-card-bg rounded-full overflow-hidden relative">
+                <div className="flex flex-col gap-3">
+                  <div className="h-1 w-full bg-card-bg rounded-full overflow-hidden relative">
                     <motion.div 
-                      className="h-full bg-brand absolute left-0 top-0"
-                      style={{ width: `${progress}%` }}
+                      className="h-full bg-brand absolute left-0 top-0 will-change-[width]"
+                      animate={{ width: `${progress}%` }}
+                      transition={{ type: "spring", stiffness: 100, damping: 20 }}
                     />
                   </div>
 
-                  <div className="flex justify-center items-center gap-6">
-                    <button onClick={playPrev} className="p-2 text-text-muted hover:text-brand transition-colors">
-                      <SkipBack size={24} />
-                    </button>
-                    <button 
+                  <div className="flex justify-center items-center gap-5">
+                    <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={playPrev} className="p-1.5 text-text-muted hover:text-brand transition-colors">
+                      <SkipBack size={20} />
+                    </motion.button>
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={togglePlay}
-                      className="w-16 h-16 flex items-center justify-center bg-brand text-white rounded-full hover:scale-105 transition-transform shadow-xl shadow-brand/20"
+                      className="w-12 h-12 flex items-center justify-center bg-brand text-white rounded-full shadow-lg shadow-brand/20 will-change-transform"
                     >
-                      {isPlaying ? <Pause size={28} fill="white" /> : <Play size={28} fill="white" className="ml-1" />}
-                    </button>
-                    <button onClick={playNext} className="p-2 text-text-muted hover:text-brand transition-colors">
-                      <SkipForward size={24} />
-                    </button>
-                  </div>
-
-                  <div className="flex items-center gap-3 bg-card-bg/50 p-3 rounded-xl">
-                    <Volume2 size={16} className="text-text-muted" />
-                    <input 
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.01"
-                      value={volume}
-                      onChange={(e) => setVolume(parseFloat(e.target.value))}
-                      className="flex-1 h-1 bg-border-subtle rounded-full appearance-none cursor-pointer accent-brand"
-                    />
+                      {isPlaying ? <Pause size={22} fill="white" /> : <Play size={22} fill="white" className="ml-1" />}
+                    </motion.button>
+                    <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={playNext} className="p-1.5 text-text-muted hover:text-brand transition-colors">
+                      <SkipForward size={20} />
+                    </motion.button>
                   </div>
                 </div>
 
                 {/* Playlist */}
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-2 border-b border-border-subtle pb-2">
-                    <ListMusic size={16} className="text-text-muted" />
-                    <span className="font-mono text-[0.65rem] uppercase tracking-widest text-text-muted">Queue</span>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-2 border-b border-border-subtle pb-1.5">
+                    <ListMusic size={14} className="text-text-muted" />
+                    <span className="font-mono text-[0.6rem] uppercase tracking-widest text-text-muted">Queue</span>
                   </div>
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-1.5">
                     {PLAYLIST.map((track, index) => (
                       <button
                         key={index}
@@ -162,21 +152,21 @@ export default function MusicSidebar({ isOpen, onClose }: MusicPlayerProps) {
                           setCurrentTrackIndex(index);
                           setIsPlaying(true);
                         }}
-                        className={`flex items-center gap-3 p-2 rounded-lg transition-all text-left ${
+                        className={`flex items-center gap-2.5 p-1.5 rounded-lg transition-all text-left ${
                           currentTrackIndex === index ? 'bg-brand/10 border border-brand/20' : 'hover:bg-card-bg border border-transparent'
                         }`}
                       >
-                        <img src={track.cover} alt="" className="w-10 h-10 rounded object-cover" />
+                        <img src={track.cover} alt="" className="w-8 h-8 rounded object-cover" />
                         <div className="flex-1 min-w-0">
-                          <p className={`text-[0.7rem] font-bold truncate ${currentTrackIndex === index ? 'text-brand' : 'text-text-main'}`}>
+                          <p className={`text-[0.65rem] font-bold truncate ${currentTrackIndex === index ? 'text-brand' : 'text-text-main'}`}>
                             {track.title}
                           </p>
-                          <p className="text-[0.6rem] text-text-muted truncate uppercase">{track.artist}</p>
+                          <p className="text-[0.55rem] text-text-muted truncate uppercase">{track.artist}</p>
                         </div>
                         {currentTrackIndex === index && isPlaying && (
-                          <div className="flex gap-0.5 items-end h-3 pr-2">
-                            <motion.div animate={{ height: [4, 12, 6] }} transition={{ repeat: Infinity, duration: 0.5 }} className="w-0.5 bg-brand" />
-                            <motion.div animate={{ height: [8, 4, 10] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-0.5 bg-brand" />
+                          <div className="flex gap-0.5 items-end h-2.5 pr-1">
+                            <motion.div animate={{ height: [3, 10, 5] }} transition={{ repeat: Infinity, duration: 0.5 }} className="w-0.5 bg-brand" />
+                            <motion.div animate={{ height: [6, 3, 8] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-0.5 bg-brand" />
                           </div>
                         )}
                       </button>
@@ -185,8 +175,8 @@ export default function MusicSidebar({ isOpen, onClose }: MusicPlayerProps) {
                 </div>
               </div>
               
-              <div className="p-6 text-center border-t border-border-subtle">
-                <p className="font-mono text-[0.6rem] text-text-muted tracking-widest uppercase">Enjoy the vibes, Kage 🕶️</p>
+              <div className="p-4 text-center border-t border-border-subtle">
+                <p className="font-mono text-[0.55rem] text-text-muted tracking-widest uppercase">Enjoy the vibes, Kage 🕶️</p>
               </div>
             </motion.div>
           </>
