@@ -37,12 +37,12 @@ src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=1
 
 <img
 height="170"
-src="https://github-readme-stats.vercel.app/api?username=kagenouReal&show_icons=true&theme=transparent&hide_border=true&title_color=8B9D77&icon_color=8B9D77&text_color=c9c9c9"
+src="https://github-readme-stats-sigma-five.vercel.app/api?username=kagenouReal&show_icons=true&theme=transparent&hide_border=true&title_color=8B9D77&icon_color=8B9D77&text_color=c9c9c9"
 />
 
 <img
 height="170"
-src="https://github-readme-stats.vercel.app/api/top-langs/?username=kagenouReal&layout=compact&theme=transparent&hide_border=true&title_color=8B9D77&text_color=c9c9c9"
+src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=kagenouReal&layout=compact&theme=transparent&hide_border=true&title_color=8B9D77&text_color=c9c9c9"
 />
 
 </div>
