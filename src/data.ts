@@ -1,3 +1,4 @@
+//=================
 export const SKILLS = [
 { name: "JavaScript", pct: 80, cat: "Language", icon: "⬢" },
 { name: "TypeScript", pct: 75, cat: "Language", icon: "⬢" },
@@ -8,7 +9,7 @@ export const SKILLS = [
 { name: "Next.js", pct: 75, cat: "Framework", icon: "⬢" },
 { name: "Flutter", pct: 65, cat: "Framework", icon: "⬢" },
 ];
-
+//=================
 export const PROJECTS = [
 {
 title: "Zqwis - Frontend",
@@ -23,29 +24,36 @@ tags: ["Next.js", "TypeScript", "SQLite"],
 github: "https://github.com/kagenouReal/Zqwis-Apis-Backend"
 }
 ];
-
+//=================
 export const CONTACTS = [
 { label: "GitHub", val: "kagenouReal", href: "https://github.com/kagenouReal"},
 { label: "Telegram", val: "@kagenouonly", href: "https://t.me/kagenouonly" },
 { label: "WhatsApp", val: "+60 111-226-0297", href: "https://wa.me/601112260297"},
 { label: "TikTok", val: "@veryy_lazyy", href: "https://www.tiktok.com/@veryy_lazyy"},
 ];
-
+//=================
 export const STACK_ICONS = [
 "JavaScript", "TypeScript", "Html", "Css", " Dart", "Node.js", "Next.js", "Flutter", "Linux"
 ];
-
+//=================
 export const PLAYLIST = [
 {
-title: "Multo",
-artist: "Cup of Joe",
-url: "/music/multo.mp3",
-cover: "/music/multo.jpg"
+title: "リテラチュア",
+artist: "Reina Ueda",
+url: "/music/リテラチュア.mp3",
+cover: "/music/リテラチュア.jpg"
 },
 {
-title: "Multo (Indo Cover)",
-artist: "Darlyne Nightbloom",
-url: "/music/multo-cover.mp3",
-cover: "/music/multo-cover.jpg"
+title: "Seisyun Complex",
+artist: "Kessoku Band",
+url: "/music/seisyuncomplex.mp3",
+cover: "/music/seisyuncomplex.jpg"
+},
+{
+title: "Reply",
+artist: "KZ (livetune)",
+url: "/music/reply.mp3",
+cover: "/music/reply.jpg"
 }
 ];
+//=================
