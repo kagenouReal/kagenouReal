@@ -1,6 +1,7 @@
+//=================
 import { motion, useScroll, useSpring } from 'motion/react';
 import { STACK_ICONS } from '../data';
-
+//=================
 export function SectionHeader({ tag, num, title }: { tag: string; num: string; title: string }) {
 return (
 <motion.div 
@@ -19,10 +20,9 @@ className="mb-6"
 </motion.div>
 );
 }
-
+//=================
 export function Marquee() {
 const items = [...STACK_ICONS, ...STACK_ICONS, ...STACK_ICONS];
-
 return (
 <div className="w-full overflow-hidden border-y border-border-subtle py-3.5 my-0 flex">
 <div className="flex gap-10 whitespace-nowrap animate-[marquee_22s_linear_infinite] w-max">
@@ -41,7 +41,7 @@ to { transform: translateX(-33.33%); }
 </div>
 );
 }
-
+//=================
 export function ScrollProgressBar() {
 const {scrollYProgress} = useScroll();
 const scaleX = useSpring(scrollYProgress, {
@@ -49,7 +49,7 @@ stiffness: 100,
 damping: 30,
 restDelta: 0.001
 });
-
+//=================
 return (
 <motion.div
 className="fixed top-0 left-0 right-0 h-1 bg-brand origin-left z-[100] will-change-transform"
@@ -57,3 +57,4 @@ style={{scaleX}}
 />
 );
 }
+//=================

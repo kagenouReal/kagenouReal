@@ -1,9 +1,10 @@
+//=================
 import { motion, Variants, AnimatePresence, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useState, useEffect, MouseEvent } from 'react';
 import { SKILLS, PROJECTS, CONTACTS, STACK_ICONS } from '../data';
 import { SectionHeader } from './DisplayUtils';
 import { Glitch } from './VisualEffects';
-
+//=================
 const container: Variants = {
 hidden: { opacity: 0 },
 visible: { 
@@ -14,7 +15,7 @@ delayChildren: 0.1
 } 
 }
 };
-
+//=================
 const item: Variants = {
 hidden: { opacity: 0, y: 20 },
 visible: { 
@@ -28,7 +29,7 @@ mass: 1
 } 
 }
 };
-
+//=================
 const softInfinite: Variants = {
 animate: {
 y: [0, -4, 0],
@@ -39,11 +40,10 @@ ease: "easeInOut"
 }
 }
 };
-
+//=================
 export function Hero() {
 const fullText = "Vibe Coder | Backend & Frontend";
 const [typed, setTyped] = useState("");
-
 useEffect(() => {
 let i = 0;
 const interval = setInterval(() => {
@@ -53,7 +53,6 @@ if (i > fullText.length) clearInterval(interval);
 }, 40);
 return () => clearInterval(interval);
 }, []);
-
 return (
 <section id="hero" className="flex items-center px-6 md:px-10 max-w-[1100px] mx-auto z-10 py-6">
 <motion.div 
@@ -66,7 +65,6 @@ className="grid lg:grid-cols-2 gap-4 items-center w-full"
 <motion.div variants={item} className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 border border-brand rounded-lg text-text-muted transition-all hover:border-brand/30 hover:bg-card-bg hover:text-text-main hover:shadow-lg hover:shadow-brand/5 will-change-transform">
 <span className="font-mono text-[0.6rem] text-brand tracking-[0.1em] uppercase animate-pulse">// Just'a Vibe Coder From — Kelantan, MY</span>
 </motion.div>
-
 <motion.div variants={item}>
 <motion.h1 
 animate={{ y: [0, -4, 0] }}
@@ -82,7 +80,6 @@ className="mt-8 text-[clamp(1rem,2.5vw,1.2rem)] text-text-muted font-mono font-m
 </motion.div>
 </motion.h1>
 </motion.div>
-
 <motion.p 
 variants={item}
 className="text-[0.9rem] text-text-muted max-w-[480px] leading-relaxed mb-2 border-l-2 border-brand/20 pl-4 will-change-[opacity,transform]"
@@ -90,7 +87,6 @@ className="text-[0.9rem] text-text-muted max-w-[480px] leading-relaxed mb-2 bord
 I build automation tools that do the work so I don't have to. Reverse-engineer APIs, scrape data, somehow make it all work.
 </motion.p>
 </div>
-
 <motion.div 
 variants={item}
 className="hidden lg:block"
@@ -137,21 +133,20 @@ ssh root@kagenou
 </section>
 );
 }
-
+//=================
 export function About() {
 const paragraphs = [
 "Started learning to code because I got bored. Didn't really fit into the traditional school system—left at 8 and spent years just vibing. Then 2024 hit and I was like, okay let me actually do something with this. Now I'm just always coding, trying different stuff.",
-
 "I do backend and frontend stuff—Node, Flutter, Next, whatever gets the job done. Mostly I'm into automation, scraping data, poking at APIs to see how they work. Use Claude and ChatGPT a lot to think through problems faster. Pretty much my go-to setup for learning and shipping stuff."
 ];
-
+//=================
 const info = [
 ["Name", "Irsyad Adam Hakimi"],
 ["age", "16 years old / 2010"],
 ["Location", "Kelantan, Malaysia"],
 ["Focus", "Backend Automation"],
 ];
-
+//=================
 return (
 <section id="about" className="py-6 px-6 md:px-10 max-w-[1000px] mx-auto z-10 relative">
 <SectionHeader num="1" tag="about" title="Who am I" />
@@ -193,7 +188,7 @@ className="text-text-muted leading-relaxed text-[0.95rem] border-l-2 border-bran
 </section>
 );
 }
-
+//=================
 function SkillBar({ name, pct, cat, delay }: { name: string, pct: number, cat: string, delay: number }) {
 const colorClass = cat === 'Language' ? 'bg-brand' : 'bg-brand-soft';
 const textColorClass = cat === 'Language' ? 'text-brand' : 'text-brand-soft';
@@ -224,7 +219,7 @@ className="absolute top-0 bottom-0 w-20 bg-gradient-to-r from-transparent via-wh
 </motion.div>
 );
 }
-
+//=================
 export function Skills() {
 const otherSkills = ["Termux", "MT Manager", "Reqable", "Eruda", "Gemini", "Claude"];
 return (
@@ -274,19 +269,15 @@ className="flex flex-col justify-center gap-0.5 px-3 py-2 border border-brand ro
 </section>
 );
 }
-
-// --- PROJECTS SECTION (TIMELINE) ---
+//=================
 function TimelineProject({ p, index }: { p: any, index: number }) {
 return (
 <motion.div 
 variants={item}
 className="relative pl-8 pb-12 last:pb-0"
 >
-{/* Timeline dot */}
 <div className="absolute left-0 top-0 w-3 h-3 rounded-full bg-brand border-2 border-bg-main shadow-[0_0_10px_rgba(139,157,119,0.5)]"></div>
-{/* Timeline line */}
 <div className="absolute left-[5px] top-3 bottom-0 w-[2px] bg-brand/20"></div>
-
 <div className="group relative">
 <h3 className="text-lg font-bold text-brand transition-colors mb-2">{p.title}</h3>
 <p className="text-[0.85rem] text-text-muted leading-relaxed mb-4">{p.desc}</p>
@@ -314,7 +305,7 @@ title="Source Code"
 </motion.div>
 );
 }
-
+//=================
 export function Projects() {
 return (
 <section id="projects" className="py-12 px-6 md:px-10 max-w-[800px] mx-auto z-10 relative">
@@ -331,14 +322,14 @@ className="mt-8"
 </section>
 );
 }
-
+//=================
 const CONTACT_ICONS: Record<string, React.ReactNode> = {
 GitHub: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>,
 TikTok: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>,
 Telegram: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>,
 WhatsApp: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
 };
-
+//=================
 export function Contact() {
 return (
 <section id="contact" className="py-6 px-6 md:px-10 max-w-[1000px] mx-auto z-10 relative">
@@ -376,5 +367,5 @@ className="flex items-center gap-3 p-2 border border-brand rounded-xl text-text-
 </motion.div>
 </section>
 );
-  }
-  
+}
+//=================
