@@ -88,7 +88,7 @@ className="mt-8 text-[clamp(1rem,2.5vw,1.2rem)] text-text-muted font-mono font-m
 variants={item}
 className="text-[0.9rem] text-text-muted max-w-[480px] leading-relaxed mb-2 border-l-2 border-brand/20 pl-4 will-change-[opacity,transform]"
 >
-Breaking down complex API architectures, bypassing security restrictions, and building practical automation ecosystems. Turning deep-dive research into scalable technical solutions.
+I just reverse-engineer APIs and automate stuff. Breaking things down until they make sense, then rebuilding them simpler.
 </motion.p>
 </div>
 
@@ -142,9 +142,9 @@ ssh root@kagenou
 // --- ABOUT SECTION ---
 export function About() {
 const paragraphs = [
-"I'm a self-taught full-stack developer who enjoys building and experimenting with code. After leaving formal school at age 8, I went through a period of regret about stepping away from education. In 2024, I decided to turn that experience into motivation, fully dedicating myself to learning software development and treating technology as my main creative space.",
+"Started learning to code because I got bored. Didn't really fit into the traditional school system—left at 8 and spent years just vibing. Then 2024 hit and I was like, okay let me actually do something with this. Now I'm just always coding, trying different stuff.",
 
-"I work across both backend and frontend development, using technologies like Node.js, Flutter (Dart), Next.js, HTML, and CSS. A big part of my workflow involves building automation tools, web scraping, and analyzing third-party APIs to understand and extend their functionality. I also actively use AI tools such as ChatGPT, Gemini, Claude, and DeepSeek to speed up learning, improve problem-solving, and enhance productivity."
+"I do backend and frontend stuff—Node, Flutter, Next, whatever gets the job done. Mostly I'm into automation, scraping data, poking at APIs to see how they work. Use Claude and ChatGPT a lot to think through problems faster. Pretty much my go-to setup for learning and shipping stuff."
 ];
 
 const info = [
@@ -354,7 +354,7 @@ viewport={{ once: false }}
 transition={{ type: "spring", stiffness: 200, damping: 25 }}
 className="flex flex-col gap-6 will-change-transform"
 >
-<div><h3 className="text-[1.2rem] mb-2 text-brand font-sans font-bold tracking-tight">Let's collaborate</h3><p className="text-text-muted text-[0.85rem] leading-[1.6] max-w-[600px] border-l-2 border-brand/20 pl-4">Have a project in mind or just want to chat backend tech? My inbox is open.</p></div>
+<div><h3 className="text-[1.2rem] mb-2 text-brand font-sans font-bold tracking-tight">Wanna build something?</h3><p className="text-text-muted text-[0.85rem] leading-[1.6] max-w-[600px] border-l-2 border-brand/20 pl-4">Got an idea or just want to talk code? Hit me up. I'm always down to work on stuff or figure out hard problems.</p></div>
 <motion.div
 variants={container}
 initial="hidden"
@@ -380,4 +380,4 @@ className="flex items-center gap-3 p-2 border border-brand rounded-xl text-text-
 </motion.div>
 </section>
 );
-}
+  }
