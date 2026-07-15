@@ -1,10 +1,11 @@
+//=================
 import '../index.css';
-
+//=================
 export const metadata = {
 title: 'About Kagenou',
 description: 'My Portfolio',
 };
-
+//=================
 export const viewport = {
 themeColor: [
 { media: '(prefers-color-scheme: light)', color: '#faf7f3' },
@@ -14,7 +15,7 @@ width: 'device-width',
 initialScale: 1,
 viewportFit: 'cover',
 };
-
+//=================
 export default function RootLayout({
 children,
 }: {
@@ -37,3 +38,4 @@ else document.documentElement.classList.remove('dark');
 </html>
 );
 }
+//=================
