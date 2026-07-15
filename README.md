@@ -14,7 +14,6 @@ src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=1
 
 </div>
 
-//=================
 
 ### Tech Stack
 
@@ -53,7 +52,6 @@ src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=1
 
 </div>
 
-//=================
 
 ### GitHub Stats
 
@@ -71,7 +69,6 @@ src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=k
 
 </div>
 
-//=================
 
 <div align="center">
 
