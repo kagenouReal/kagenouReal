@@ -87,48 +87,6 @@ className="text-[0.9rem] text-text-muted max-w-[480px] leading-relaxed mb-2 bord
 I build automation tools that do the work so I don't have to. Reverse-engineer APIs, scrape data, somehow make it all work.
 </motion.p>
 </div>
-<motion.div 
-variants={item}
-className="hidden lg:block"
->
-<motion.div 
-animate={{ 
-y: [0, -10, 0],
-rotate: [0, 0.5, 0, -0.5, 0]
-}}
-transition={{ 
-duration: 8, 
-repeat: Infinity, 
-ease: "easeInOut" 
-}}
-className="relative group will-change-transform"
->
-<div className="absolute -inset-1 bg-gradient-to-r from-brand to-brand-soft rounded-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-<div className="relative bg-card-bg border border-brand rounded-xl shadow-2xl overflow-hidden font-mono text-[0.7rem] text-text-muted">
-<div className="flex items-center gap-2 px-4 py-3 border-b border-brand bg-bg-sub/50">
-<div className="flex gap-1.5">
-<div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
-<div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
-<div className="w-2.5 h-2.5 rounded-full bg-green-500/50 animate-pulse"></div>
-</div>
-<div className="text-[0.55rem] uppercase opacity-40 ml-2 font-bold tracking-widest flex items-center gap-2">
-<span className="w-1.5 h-1.5 rounded-full bg-brand/50 animate-ping"></span>
-ssh root@kagenou
-</div>
-</div>
-<div className="p-6 space-y-2">
-<div className="flex gap-3"><span className="opacity-20">01</span><p><span className="text-brand">class</span> <span className="text-text-main font-bold">Developer</span> {"{"}</p></div>
-<div className="flex gap-3"><span className="opacity-20">02</span><p className="pl-4"><span className="text-text-main">constructor</span>() {"{"}</p></div>
-<div className="flex gap-3"><span className="opacity-20">03</span><p className="pl-8"><span className="text-brand italic">this</span>.<span className="text-text-main">alias</span> = <span className="text-brand-soft font-medium">'Kagenou'</span>;</p></div>
-<div className="flex gap-3"><span className="opacity-20">04</span><p className="pl-8 text-text-muted italic">// Age — 16 years old / 2010</p></div>
-<div className="flex gap-3"><span className="opacity-20">05</span><p className="pl-8"><span className="text-brand italic">this</span>.<span className="text-text-main">status</span> = <span className="text-brand-soft animate-pulse">'Always Coding'</span>;</p></div>
-<div className="flex gap-3"><span className="opacity-20">06</span><p className="pl-8"><span className="text-brand italic">this</span>.<span className="text-text-main">focus</span> = [<span className="text-brand-soft">'API'</span>, <span className="text-brand-soft">'Automation'</span>];</p></div>
-<div className="flex gap-3"><span className="opacity-20">07</span><p className="pl-4">{"}"}</p></div>
-<div className="flex gap-3"><span className="opacity-20">08</span><p>{"}"}</p></div>
-</div>
-</div>
-</motion.div>
-</motion.div>
 </motion.div>
 </section>
 );
