@@ -226,7 +226,7 @@ export const LanyardCanvas: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 
     scene.add(cardPivot);
 
     const cardInner = new THREE.Group();
-    const cardScale = container.clientWidth < 640 ? 1.8096 : 2.3088;
+const cardScale = container.clientWidth < 640 ? 1.8096 : 2.3088;
 cardInner.scale.setScalar(cardScale);
     cardInner.position.set(0, -1.0, -0.05);
     cardPivot.add(cardInner);
@@ -335,7 +335,7 @@ cardInner.scale.setScalar(cardScale);
     const dragOffset = new THREE.Vector3();
     let angVelY = 0;
     let rotY = 0;
-    const jointOffsetY = 1.45;
+    const jointOffsetY = container.clientWidth < 640 ? 2.62392 : 3.34776;
 
     const updatePointer = (e: PointerEvent) => {
       const rect = renderer.domElement.getBoundingClientRect();
@@ -571,3 +571,4 @@ cardInner.scale.setScalar(cardScale);
     </div>
   );
 };
+    
