@@ -226,7 +226,7 @@ export const LanyardCanvas: React.FC<{ theme?: 'dark' | 'light' }> = ({ theme = 
     scene.add(cardPivot);
 
     const cardInner = new THREE.Group();
-    const cardScale = container.clientWidth < 640 ? 2.262 : 2.886;
+    const cardScale = container.clientWidth < 640 ? 1.8096 : 2.3088;
 cardInner.scale.setScalar(cardScale);
     cardInner.position.set(0, -1.0, -0.05);
     cardPivot.add(cardInner);
