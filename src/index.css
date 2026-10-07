@@ -1,240 +1,207 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap");
 @import "tailwindcss";
-
 :root {
-  --bg-primary: #08080c;
-  --bg-secondary: #12121a;
-  --bg-card: #12121a;
-  --bg-card-solid: #12121a;
-  --bg-elevated: #1a1a26;
-  --bg-input: #0a0a10;
-  --bg-badge: #1f1218;
-  --bg-pinned: #1f1218;
-  --border: #2a2a38;
-  --border-strong: #ef4444;
-  --card-shadow: 4px 4px 0px #000000;
-  --card-shadow-hover: 5px 5px 0px #ef4444;
-  --text-primary: #ffffff;
-  --text-secondary: #d4d4d8;
-  --text-muted: #888896;
-  --accent: #ef4444;
-  --accent-strong: #f87171;
-  --accent-mint: #ffffff;
-  --accent-warm: #dc2626;
-  --btn-primary-bg: #dc2626;
-  --btn-primary-hover: #ef4444;
-  --btn-primary-text: #ffffff;
-  --btn-secondary-bg: #1a1a26;
-  --btn-secondary-hover: #262638;
-  --btn-secondary-text: #ffffff;
-  --grid-line: rgba(255, 255, 255, 0.05);
-  --nav-bg: #0c0c14;
-  --nav-bg-scrolled: #08080c;
-  --modal-backdrop: rgba(0, 0, 0, 0.88);
+--bg-primary: #08080c;
+--bg-secondary: #12121a;
+--bg-card: #12121a;
+--bg-card-solid: #12121a;
+--bg-elevated: #1a1a26;
+--bg-input: #0a0a10;
+--bg-badge: #1f1218;
+--bg-pinned: #1f1218;
+--border: #2a2a38;
+--border-strong: #ef4444;
+--card-shadow: 4px 4px 0px #000000;
+--card-shadow-hover: 5px 5px 0px #ef4444;
+--text-primary: #ffffff;
+--text-secondary: #d4d4d8;
+--text-muted: #888896;
+--accent: #ef4444;
+--accent-strong: #f87171;
+--accent-mint: #ffffff;
+--accent-warm: #dc2626;
+--btn-primary-bg: #dc2626;
+--btn-primary-hover: #ef4444;
+--btn-primary-text: #ffffff;
+--btn-secondary-bg: #1a1a26;
+--btn-secondary-hover: #262638;
+--btn-secondary-text: #ffffff;
+--grid-line: rgba(255, 255, 255, 0.05);
+--nav-bg: #0c0c14;
+--nav-bg-scrolled: #08080c;
+--modal-backdrop: rgba(0, 0, 0, 0.88);
 }
-
 @layer base {
-  * {
-    box-sizing: border-box;
-    caret-color: transparent;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  html {
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-  }
-
-  body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: 'DM Mono', monospace;
-    overflow-x: hidden;
-    -ms-overflow-style: none;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
-
-  input,
-  textarea {
-    caret-color: var(--accent);
-    -webkit-user-select: text;
-    user-select: text;
-  }
+* {
+box-sizing: border-box;
+caret-color: transparent;
+-webkit-user-select: none;
+user-select: none;
 }
-
+html {
+scroll-behavior: smooth;
+scrollbar-width: none;
+}
+@media (prefers-reduced-motion: reduce) {
+html {
+scroll-behavior: auto;
+}
+}
+body {
+background-color: var(--bg-primary);
+color: var(--text-primary);
+font-family: 'DM Mono', monospace;
+overflow-x: hidden;
+-ms-overflow-style: none;
+transition: background-color 0.2s ease, color 0.2s ease;
+}
+input,
+textarea {
+caret-color: var(--accent);
+-webkit-user-select: text;
+user-select: text;
+}
+}
 .font-pixel-title {
-  font-family: 'Silkscreen', 'Press Start 2P', monospace;
+font-family: 'Silkscreen', 'Press Start 2P', monospace;
 }
-
 .font-pixel-press {
-  font-family: 'Press Start 2P', monospace;
+font-family: 'Press Start 2P', monospace;
 }
-
 .font-pixel-terminal {
-  font-family: 'VT323', monospace;
+font-family: 'VT323', monospace;
 }
-
-/* Pixel Dither & Border Collapse Utilities */
 .pixel-dither-bg {
-  background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.25) 0 25%, transparent 0 50%);
-  background-size: 4px 4px;
+background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.25) 0 25%, transparent 0 50%);
+background-size: 4px 4px;
 }
-
 .pixel-dither-hover {
-  transition: all 0.15s ease;
+transition: all 0.15s ease;
 }
-
 .pixel-dither-hover:hover {
-  background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.3) 0 25%, transparent 0 50%);
-  background-size: 4px 4px;
-  border-color: var(--accent) !important;
+background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.3) 0 25%, transparent 0 50%);
+background-size: 4px 4px;
+border-color: var(--accent) !important;
 }
-
-/* Navigation Links Pixel Dither Hover State */
 .nav-link-item {
-  position: relative;
-  padding: 4px 10px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  transition: all 0.15s ease;
+position: relative;
+padding: 4px 10px;
+border-radius: 4px;
+border: 1px solid transparent;
+transition: all 0.15s ease;
 }
-
 .nav-link-item:hover {
-  color: #ffffff !important;
-  border-color: var(--accent);
-  background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.35) 0 25%, transparent 0 50%);
-  background-size: 4px 4px;
+color: #ffffff !important;
+border-color: var(--accent);
+background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.35) 0 25%, transparent 0 50%);
+background-size: 4px 4px;
 }
-
-/* Classic Pixel Art Card - Solid, Crisp 2px Borders, Hard Pixel Shadows */
 .modern-card {
-  background: var(--bg-card);
-  border: 2px solid var(--border);
-  border-radius: 0.875rem;
-  box-shadow: var(--card-shadow);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+background: var(--bg-card);
+border: 2px solid var(--border);
+border-radius: 0.875rem;
+box-shadow: var(--card-shadow);
+transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
-
 .modern-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--card-shadow-hover);
-  transform: translate(-1px, -1px);
+border-color: var(--border-strong);
+box-shadow: var(--card-shadow-hover);
+transform: translate(-1px, -1px);
 }
-
 .modern-input {
-  background: var(--bg-input);
-  border: 2px solid var(--border);
-  border-radius: 0.75rem;
-  color: var(--text-primary);
-  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.5);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+background: var(--bg-input);
+border: 2px solid var(--border);
+border-radius: 0.75rem;
+color: var(--text-primary);
+box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.5);
+transition: border-color 0.15s ease, background-color 0.15s ease;
 }
-
 .modern-input::placeholder {
-  color: var(--text-muted);
+color: var(--text-muted);
 }
-
 .modern-input:focus {
-  border-color: var(--accent);
-  background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.12) 0 25%, transparent 0 50%);
-  background-size: 4px 4px;
-  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.5), 0 0 0 2px var(--bg-badge);
-  outline: none;
+border-color: var(--accent);
+background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.12) 0 25%, transparent 0 50%);
+background-size: 4px 4px;
+box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.5), 0 0 0 2px var(--bg-badge);
+outline: none;
 }
-
 .modern-btn-primary {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-  border: 2px solid var(--border-strong);
-  border-radius: 0.75rem;
-  box-shadow: 4px 4px 0px #000000;
-  font-family: 'Silkscreen', monospace;
-  transition: all 0.15s ease;
+background: var(--btn-primary-bg);
+color: var(--btn-primary-text);
+border: 2px solid var(--border-strong);
+border-radius: 0.75rem;
+box-shadow: 4px 4px 0px #000000;
+font-family: 'Silkscreen', monospace;
+transition: all 0.15s ease;
 }
-
 .modern-btn-primary:hover {
-  background-color: var(--btn-primary-hover);
-  background-image: repeating-conic-gradient(rgba(0, 0, 0, 0.28) 0 25%, transparent 0 50%);
-  background-size: 4px 4px;
-  border-color: #ffffff;
-  box-shadow: 5px 5px 0px #000000;
-  transform: translate(-1px, -1px);
+background-color: var(--btn-primary-hover);
+background-image: repeating-conic-gradient(rgba(0, 0, 0, 0.28) 0 25%, transparent 0 50%);
+background-size: 4px 4px;
+border-color: #ffffff;
+box-shadow: 5px 5px 0px #000000;
+transform: translate(-1px, -1px);
 }
-
 .modern-btn-primary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px #000000;
+transform: translate(2px, 2px);
+box-shadow: 1px 1px 0px #000000;
 }
-
 .modern-btn-secondary {
-  background: var(--btn-secondary-bg);
-  color: var(--btn-secondary-text);
-  border: 2px solid var(--border);
-  border-radius: 0.75rem;
-  box-shadow: 4px 4px 0px #000000;
-  font-family: 'Silkscreen', monospace;
-  transition: all 0.15s ease;
+background: var(--btn-secondary-bg);
+color: var(--btn-secondary-text);
+border: 2px solid var(--border);
+border-radius: 0.75rem;
+box-shadow: 4px 4px 0px #000000;
+font-family: 'Silkscreen', monospace;
+transition: all 0.15s ease;
 }
-
 .modern-btn-secondary:hover {
-  border-color: var(--accent);
-  background-color: var(--btn-secondary-hover);
-  background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.3) 0 25%, transparent 0 50%);
-  background-size: 4px 4px;
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0px #000000;
+border-color: var(--accent);
+background-color: var(--btn-secondary-hover);
+background-image: repeating-conic-gradient(rgba(239, 68, 68, 0.3) 0 25%, transparent 0 50%);
+background-size: 4px 4px;
+transform: translate(-1px, -1px);
+box-shadow: 5px 5px 0px #000000;
 }
-
 .modern-btn-secondary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px #000000;
+transform: translate(2px, 2px);
+box-shadow: 1px 1px 0px #000000;
 }
-
 ::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+width: 0;
+height: 0;
 }
-
 ::-webkit-scrollbar-track {
-  background: transparent;
+background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: transparent;
+background: transparent;
 }
-
 .custom-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+scrollbar-width: thin;
+scrollbar-color: var(--border) transparent;
 }
-
 .custom-scroll::-webkit-scrollbar {
-  width: 6px;
+width: 6px;
 }
-
 .custom-scroll::-webkit-scrollbar-track {
-  background: transparent;
+background: transparent;
 }
-
 .custom-scroll::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 0px;
+background: var(--border);
+border-radius: 0px;
 }
-
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+background: var(--accent);
 }
-
 .responsive-wrapper {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
+width: 100%;
+height: 100vh;
+position: relative;
+overflow: hidden;
+}
+@keyframes cursorBlink {
+0%,100% {opacity: 1;}
+50% {opacity: 0;}
 }
