@@ -606,8 +606,8 @@ export const LanyardCanvas: React.FC<{
 
 const jointOffsetY =
   container.clientWidth < 640
-    ? 2.523
-    : 3.219;
+    ? 1.30
+    : 1.66;
 
     const updatePointer = (
       e: PointerEvent
