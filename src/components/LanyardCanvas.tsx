@@ -604,14 +604,10 @@ export const LanyardCanvas: React.FC<{
     let angVelY = 0;
     let rotY = 0;
 
-    // IMPORTANT:
-    // Card is scaled up, but cardInner itself
-    // is positioned at Y = -1.0.
-    // So compensate that -1.0 offset here.
-    const jointOffsetY =
-      container.clientWidth < 640
-        ? 1.62392
-        : 2.34776;
+const jointOffsetY =
+  container.clientWidth < 640
+    ? 2.523
+    : 3.219;
 
     const updatePointer = (
       e: PointerEvent
