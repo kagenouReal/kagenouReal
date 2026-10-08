@@ -227,18 +227,17 @@ return (
 <div className="flex items-center gap-2 mb-1">
 <GitCommit size={18} className="text-[var(--accent)] animate-pulse" />
 <h3 className="font-pixel-title text-sm md:text-base text-[var(--text-primary)]">
-GitHub Contribution Heatmap
+GITHUB ACTIVITY
 </h3>
 </div>
 <p className="text-xs text-[var(--text-secondary)] font-mono">
-Activity log for{' '}
+evidence of poor life choices
 <a
 href={`https://github.com/${username}`}
 target="_blank"
 rel="noopener noreferrer"
 className="text-[var(--accent)] font-bold hover:underline inline-flex items-center gap-1"
 >
-@{username}
 <ExternalLink size={12} />
 </a>
 </p>

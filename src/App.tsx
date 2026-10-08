@@ -269,16 +269,41 @@ setMounted(true);
 let rafId = 0;
 let ticking = false;
 const updateActiveSection = () => {
+const sectionIds = ['home', 'about', 'portfolio', 'contact'];
 setScrolled(window.scrollY > 20);
-for (const id of ['home', 'about', 'portfolio', 'contact']) {
+let bestSection = 'home';
+let bestScore = -1;
+const viewportTop = 0;
+const viewportBottom = window.innerHeight;
+const viewportCenter = window.innerHeight / 2;
+for (const id of sectionIds) {
 const el = document.getElementById(id);
 if (!el) continue;
 const rect = el.getBoundingClientRect();
-if (rect.top <= 140 && rect.bottom >= 140) {
-setActiveSection(id);
-break;
+const visibleTop = Math.max(rect.top, viewportTop);
+const visibleBottom = Math.min(rect.bottom, viewportBottom);
+const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+if (visibleHeight <= 0) continue;
+const visibilityRatio =
+visibleHeight / Math.min(rect.height, window.innerHeight);
+const sectionCenter = rect.top + rect.height / 2;
+const distanceFromCenter =
+Math.abs(sectionCenter - viewportCenter);
+const score =
+visibilityRatio * 1000 -
+distanceFromCenter;
+
+if (score > bestScore) {
+bestScore = score;
+bestSection = id;
 }
 }
+const maxScrollY =
+document.documentElement.scrollHeight - window.innerHeight;
+if (window.scrollY >= maxScrollY - 4) {
+bestSection = 'contact';
+}
+setActiveSection(bestSection);
 ticking = false;
 };
 const onScroll = () => {
@@ -411,17 +436,17 @@ background: 'var(--accent)',
 }
 //===============
 const HERO_SKILLS = [
-'Node.js',
-'Express',
-'Next.js',
 'React',
-'Bun',
-'Laravel',
+'Vite',
+'Tailwind CSS',
+'Motion',
+'Three.js',
+'D3.js',
 ];
 const TECH_STACK_CATEGORIES = [
 { id: 'languages', title: 'Languages & Web' },
 { id: 'frameworks', title: 'Frameworks & Runtime' },
-{ id: 'skills', title: 'Focus Areas' },
+{ id: 'skills', title: 'Stuff I Actually Use' },
 ] as const;
 //===============
 function HeroSection({ showApp }: { showApp: boolean }) {
@@ -486,7 +511,7 @@ letterSpacing: '0.12em',
 textTransform: 'uppercase',
 }}
 >
-★ OPEN TO INTERESTING STUFF
+// OPEN TO INTERESTING SHIT
 </span>
 </motion.div>
 <div>
@@ -550,7 +575,7 @@ text={[
 'Backend Development',
 'Bot Development',
 'Reverse Engineering',
-'Vibe Coding',
+'Automation & Vibe Coding',
 ]}
 typingSpeed={75}
 pauseDuration={1500}
@@ -581,8 +606,9 @@ letterSpacing: '0.01em',
 textWrap: 'pretty',
 }}
 >
-I build backend systems, bots, APIs, scrapers, and Linux-side tooling. I use AI heavily — getting the thing to work matters more than memorizing every damn syntax.
-</p>
+I build backend systems, bots, APIs, scrapers, and automation tools. I also like tearing shit apart just to see how it works, because apparently leaving things alone was never an option.
+<br />
+I'm heavily AI-assisted. AI writes a good chunk of the code — I come up with the ideas, write the prompts, debug the bullshit, and make questionable decisions until somehow, it works.</p>
 </motion.div>
 <motion.div
 initial="hidden"
@@ -646,7 +672,7 @@ fontSize: 12.5,
 color: 'var(--text-muted)',
 }}
 >
-↗ open to interesting projects, collabs, and weird technical stuff
+↗ open to weird projects, cursed ideas, and questionable decisions
 </span>
 </motion.div>
 <motion.div
@@ -667,7 +693,7 @@ className="modern-card inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full
 className="font-pixel-title text-[10px] tracking-widest font-bold uppercase"
 style={{ color: 'var(--accent)' }}
 >
-SCROLL
+SEE WHAT I BROKE
 </span>
 <span style={{ fontSize: 11, color: 'var(--accent)' }}>▼</span>
 </a>
@@ -716,7 +742,7 @@ title: 'PROJECTS',
 {
 icon: <Award size={18} style={{ color: 'var(--accent)' }} />,
 value: String(CERTIFICATES_DATA.length),
-title: 'CERTIFICATES',
+title: 'CERTS',
 },
 {
 icon: <Award size={18} style={{ color: 'var(--accent)' }} />,
@@ -783,7 +809,7 @@ fontSize: 'clamp(16px,2.2vw,24px)',
 marginTop: 8,
 }}
 >
-Backend Developer / Vibe Coder
+Backend Dev / Reverse Engineer
 </div>
 </div>
 </motion.div>
@@ -804,13 +830,13 @@ lineHeight: 1.8,
 maxWidth: '520px',
 }}
 >
-I&apos;m mainly into backend development and reverse engineering, with bots, servers, networking, APIs, scraping, Linux, and automation in the mix. I can build web interfaces too, but frontend isn&apos;t my main lane.
+I'm mainly into backend development and reverse engineering. I build bots, APIs, scrapers, automation tools, and whatever else looks like it should probably be automated.
 <br />
-I&apos;m a heavy AI-assisted coder: AI writes a lot of the code; I bring the ideas and prompts, then test, debug, integrate, and iterate until it works.
+I'm a heavy AI-assisted coder. AI writes a lot of the code; I come up with the idea, write the prompts, test shit, debug the bullshit, and keep messing with it until it works.
 <br />
-Most projects start with &quot;wtf, can I automate this?&quot; I like figuring out how stuff works under the hood, breaking it, fixing it, and somehow shipping the weird result.
+Most of my projects start with "wtf, can I automate this?" Then I end up digging into how something works under the hood, breaking shit, fixing it, and somehow turning a stupid idea into something that actually runs.
 <br />
-Somehow it works. Don&apos;t ask me why.
+Somehow, it works. I usually have no fucking idea why.
 </motion.p>
 <motion.div
 variants={aboutFadeUp}
@@ -862,7 +888,7 @@ width: 'fit-content',
 ▸
 </span>
 <span style={{ color: 'var(--text-primary)' }}>
-“Just coding, reversing, vibing, and somehow shipping.”
+“AI writes it. I break it. Somehow it ships.”
 </span>
 </motion.div>
 </motion.div>
@@ -922,7 +948,7 @@ color: 'var(--btn-primary-text)',
 border: '1px solid var(--border-strong)',
 }}
 >
-★ BACKEND DEV // VIBE CODER ★
+BACKEND DEV // REVERSE ENGINEER 
 </div>
 </div>
 </motion.div>
@@ -1211,7 +1237,7 @@ style={{ color: 'var(--text-secondary)' }}
 className="font-pixel-title text-xs uppercase tracking-wider mb-2.5"
 style={{ color: 'var(--accent)' }}
 >
-Technologies Used
+Built With
 </p>
 <div className="flex flex-wrap gap-2">
 {selectedProject.technologies.map((tech) => (
@@ -1234,7 +1260,7 @@ color: 'var(--text-primary)',
 className="font-pixel-title text-xs uppercase tracking-wider mb-2.5"
 style={{ color: 'var(--accent)' }}
 >
-Key Features
+What It Does
 </p>
 <ul className="space-y-2">
 {selectedProject.key_features.map((feat, i) => (
@@ -1261,7 +1287,7 @@ target="_blank"
 rel="noopener noreferrer"
 className="modern-btn-primary px-5 py-3 text-xs font-bold flex items-center gap-2 transition"
 >
-Open on GitHub
+Open Repo
 <ExternalLink size={15} />
 </a>
 <button
@@ -1291,7 +1317,7 @@ className="text-center mb-7"
 className="font-pixel-title text-2xl md:text-4xl font-bold mb-3"
 style={{ color: 'var(--text-primary)' }}
 >
-Portfolio Showcase
+Things I Somehow Shipped
 </h1>
 <p
 className="max-w-xl mx-auto text-sm md:text-base"
@@ -1335,8 +1361,8 @@ color: 'var(--text-secondary)',
 {tab === 'projects'
 ? 'Projects'
 : tab === 'certificates'
-? 'Certificates'
-: 'Tech Stack'}
+? 'Certs'
+: 'Stack'}
 </button>
 );
 })}
@@ -1584,7 +1610,7 @@ user: 'wa.me/kagenouReal',
 icon: WhatsAppIcon,
 link: 'https://wa.me/kagenouReal',
 highlight: true,
-desc: 'Fastest response for inquiries',
+desc: 'Usually the fastest way to reach me',
 },
 {
 title: 'Telegram',
@@ -1592,7 +1618,7 @@ user: 't.me/kagenouonly',
 icon: TelegramIcon,
 link: 'https://t.me/kagenouonly',
 highlight: false,
-desc: 'Direct chats & messaging',
+desc: 'For random shit & actual conversations',
 },
 {
 title: 'Email',
@@ -1600,7 +1626,7 @@ user: 'kagenoureal@gmail.com',
 icon: Mail,
 link: 'mailto:kagenoureal@gmail.com',
 highlight: false,
-desc: 'Send me an email',
+desc: 'For stuff that needs an email',
 },
 {
 title: 'TikTok',
@@ -1608,7 +1634,7 @@ user: '@veryy_lazyy',
 icon: TikTokIcon,
 link: 'https://tiktok.com/@veryy_lazyy',
 highlight: false,
-desc: 'Short clips & automation stuff',
+desc: 'I have a TikTok, apparently.',
 },
 ];
 return (
@@ -1628,11 +1654,11 @@ style={{ backgroundColor: 'var(--accent)' }}
 className="font-pixel-title text-2xl md:text-3xl font-bold"
 style={{ color: 'var(--accent)' }}
 >
-Direct Channels
+Where to Find Me
 </h2>
 </div>
 <p className="text-base mb-7 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-Open to interesting projects, collabs, automation ideas, API stuff, and technically cursed experiments.
+Open to weird projects, collabs, automation ideas, API bullshit, and technically cursed experiments.
 </p>
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
 {socialGridLinks.map((item, idx) => {
@@ -1706,9 +1732,9 @@ style={{ borderTop: '2px solid var(--border)', color: 'var(--text-muted)' }}
 >
 <span className="font-pixel-title text-[11px] flex items-center gap-2">
 <Sparkles size={12} style={{ color: 'var(--accent)' }} />
-OPEN TO INTERESTING STUFF
+OPEN TO WEIRD SHIT
 </span>
-<span className="font-pixel-title text-[11px]">PROJECTS • COLLABS • WEIRD IDEAS</span>
+<span className="font-pixel-title text-[11px]">PROJECTS • COLLABS • CURSED IDEAS</span>
 </div>
 </motion.div>
 );
@@ -1736,7 +1762,7 @@ viewport={{ once: true }}
 className="font-pixel-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4"
 style={{ color: 'var(--text-primary)' }}
 >
-Contact Me
+Got a Weird Project?
 </motion.h1>
 <motion.p
 initial={{ opacity: 0, y: 25 }}
@@ -1746,7 +1772,7 @@ viewport={{ once: true }}
 className="text-sm sm:text-base max-w-xl sm:max-w-2xl mx-auto leading-relaxed"
 style={{ color: 'var(--text-secondary)' }}
 >
-Got a project idea, a weird API, or something that needs automating? Let&apos;s talk.
+Got a project, cursed API, or something that needs automating? Hit me up.
 </motion.p>
 </motion.div>
 <div className="w-full">
@@ -1870,7 +1896,7 @@ fontWeight: 700,
 color: 'var(--accent)',
 }}
 >
-to my
+to the mess
 </motion.span>
 </div>
 <motion.h1
@@ -1888,7 +1914,7 @@ whiteSpace: 'nowrap',
 color: 'var(--accent)',
 }}
 >
-Portfolio
+Kagenou
 </motion.h1>
 </div>
 <motion.div
@@ -1903,7 +1929,7 @@ letterSpacing: '0.08em',
 color: 'var(--accent)',
 }}
 >
-★ github.com/kagenouReal ★
+// github.com/kagenouReal
 </motion.div>
 </motion.div>
 <motion.div
@@ -1922,7 +1948,7 @@ letterSpacing: '0.12em',
 pointerEvents: 'none',
 }}
 >
-↑ SWIPE UP TO ENTER
+↑ SWIPE UP AND SEE WHAT I BROKE
 </motion.div>
 </div>
 );
