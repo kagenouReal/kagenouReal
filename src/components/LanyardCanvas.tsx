@@ -297,8 +297,8 @@ scene.add(cardPivot);
 const cardInner = new THREE.Group();
 const cardScale =
 container.clientWidth < 640
-? 1.8096
-: 2.3088;
+? 1.44768
+: 1.84704;
 cardInner.scale.setScalar(cardScale);
 cardInner.position.set(
 0,
