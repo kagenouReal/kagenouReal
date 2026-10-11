@@ -498,7 +498,7 @@ new THREE.Vector3();
 let angVelY = 0;
 let rotY = 0;
 const jointOffsetY =
-(container.clientWidth < 640 ? 1.34 : 1.70) * 0.8;
+  (container.clientWidth < 640 ? 1.34 : 1.70) * 0.88;
 let pointerRect = renderer.domElement.getBoundingClientRect();
 const updatePointer = (
 e: PointerEvent
