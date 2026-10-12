@@ -299,13 +299,19 @@ scene.add(strapMesh);
 const cardPivot = new THREE.Group();
 scene.add(cardPivot);
 const cardInner = new THREE.Group();
+const getMobileCardOffsetX = () =>
+  container.clientWidth < 640
+    ? -2 * camera.position.z *
+      Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) *
+      camera.aspect * 0.03
+    : 0;
 const cardScale =
 container.clientWidth < 640
 ? 1.6074828704
 : 2.12529391072;
 cardInner.scale.setScalar(cardScale);
 cardInner.position.set(
-0,
+getMobileCardOffsetX(),
 -1.0,
 -0.05
 );
@@ -637,6 +643,7 @@ camera.aspect =
 container.clientWidth /
 container.clientHeight;
 camera.updateProjectionMatrix();
+cardInner.position.x = getMobileCardOffsetX();
 renderer.setSize(
 container.clientWidth,
 container.clientHeight
