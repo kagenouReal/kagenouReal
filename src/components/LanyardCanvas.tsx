@@ -190,11 +190,15 @@ anchorX = 1.7;
 } else {
 anchorX = 2.1;
 }
-return anchorX * 1.3;
+const visibleWorldWidth =
+  2 * camera.position.z *
+  Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) *
+  (container.clientWidth / container.clientHeight);
+return anchorX * 1.3 + visibleWorldWidth * 0.07;
 };
 const anchor = new THREE.Vector3(
 getAnchorX(),
-3.2,
+3.328,
 0
 );
 const numNodes = 4;
@@ -297,8 +301,8 @@ scene.add(cardPivot);
 const cardInner = new THREE.Group();
 const cardScale =
 container.clientWidth < 640
-? 1.44768
-: 1.84704;
+? 1.6074828704
+: 2.12529391072;
 cardInner.scale.setScalar(cardScale);
 cardInner.position.set(
 0,
@@ -498,7 +502,7 @@ new THREE.Vector3();
 let angVelY = 0;
 let rotY = 0;
 const jointOffsetY =
-  (container.clientWidth < 640 ? 1.34 : 1.70) * 0.70;
+(container.clientWidth < 640 ? 1.34 : 1.70) * 0.87;
 let pointerRect = renderer.domElement.getBoundingClientRect();
 const updatePointer = (
 e: PointerEvent
