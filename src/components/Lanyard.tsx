@@ -97,10 +97,10 @@ drawCard(img);
 texture.needsUpdate = true;
 onUpdate(texture);
 };
-img.src = '/assets/card-avatar.png';
+img.src = '/assets/avatar.png';
 }
 //===============
-export const LanyardCanvas: FC<{
+export const Lanyard: FC<{
 theme?: 'dark' | 'light';
 }> = ({ theme = 'dark' }) => {
 const mountRef = useRef<HTMLDivElement | null>(null);
@@ -225,7 +225,7 @@ anchor.y - idx * segmentLen,
 );
 const texLoader = new THREE.TextureLoader();
 const bandTexture = texLoader.load(
-'/assets/band-plain.png'
+'/assets/band.png'
 );
 bandTexture.wrapS = THREE.RepeatWrapping;
 bandTexture.wrapT = THREE.RepeatWrapping;

@@ -1,5 +1,5 @@
 //===============
-export const PROFILE_IMAGE_URL = '/assets/card-profile.png';
+export const PROFILE_IMAGE_URL = '/assets/profile.png';
 export const BACKGROUND_VIDEO_URL = '/assets/background.mp4';
 //===============
 export interface ProjectItem {
@@ -36,7 +36,7 @@ title: 'Pteroless',
 description:
 'An experimental Pterodactyl-derived server panel with a local process runner, built for personal hosting and development on Linux.',
 image_url:
-'/assets/project/pteroless.png',
+'/assets/projects/pteroless.png',
 live_url: 'https://github.com/kagenouReal/Pteroless',
 github_url: 'https://github.com/kagenouReal/Pteroless',
 technologies: ['PHP', 'Laravel', 'React', 'TypeScript', 'Tailwind CSS'],
@@ -53,7 +53,7 @@ title: 'Kobeni-MD',
 description:
 'A multi-device WhatsApp bot built with Node.js and Baileys, with modular plugins and automation-focused features.',
 image_url:
-'/assets/project/kobeni.png',
+'/assets/projects/kobeni.png',
 live_url: 'https://github.com/kagenouReal/Kobeni-MD',
 github_url: 'https://github.com/kagenouReal/Kobeni-MD',
 technologies: ['Node.js', 'JavaScript', 'Baileys', 'Cheerio', 'WhatsApp'],
@@ -70,7 +70,7 @@ title: 'Zqwis',
 description:
 'A Next.js and TypeScript project combining API utilities, scraping, WhatsApp integrations, scheduled jobs, and SQLite-backed tools.',
 image_url:
-'/assets/project/zqwis.png',
+'/assets/projects/zqwis.png',
 live_url: 'https://github.com/kagenouReal/Zqwis-Apis-Backend',
 github_url: 'https://github.com/kagenouReal/Zqwis-Apis-Backend',
 technologies: ['TypeScript', 'Next.js', 'Node.js', 'SQLite', 'Cheerio'],
@@ -87,17 +87,17 @@ export const CERTIFICATES_DATA: CertificateItem[] = [
 {
 id: 'cert-backend-dev',
 title: 'Backend Systems & API Architecture',
-image_url: '/assets/certificates/backapi-cert.png',
+image_url: '/assets/certificates/backapi.png',
 },
 {
 id: 'cert-automation-bots',
 title: 'Bot Development & Automation',
-image_url: '/assets/certificates/botauto-cert.png',
+image_url: '/assets/certificates/botauto.png',
 },
 {
 id: 'cert-reverse-engineering',
 title: 'Web Scraping & Reverse Engineering',
-image_url: '/assets/certificates/reverseweb-cert.png',
+image_url: '/assets/certificates/reverseweb.png',
 },
 ];
 //===============

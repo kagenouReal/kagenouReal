@@ -11,11 +11,11 @@ count: number;
 level: 0 | 1 | 2 | 3 | 4;
 }
 //===============
-interface GithubHeatmapProps {
+interface GitHubHeatmapProps {
 username?: string;
 }
 //===============
-export const GithubHeatmap: FC<GithubHeatmapProps> = ({ username = 'kagenouReal' }) => {
+export const GitHubHeatmap: FC<GitHubHeatmapProps> = ({ username = 'kagenouReal' }) => {
 const svgRef = useRef<SVGSVGElement | null>(null);
 const containerRef = useRef<HTMLDivElement | null>(null);
 const [data, setData] = useState<ContributionDay[]>([]);

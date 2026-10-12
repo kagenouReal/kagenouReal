@@ -3,19 +3,19 @@ import { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import type { MouseEvent, PointerEvent } from 'react';
 import { motion, AnimatePresence, useInView } from 'motion/react';
 import { Code2, Globe, FileText, ArrowUpRight, ArrowRight, ChevronDown, ChevronUp, User, X, ExternalLink, Sparkles, Mail, GitBranch } from 'lucide-react';
-import { playHoverSound, playClickSound } from './utils/soundEffects';
-import { TypeText } from './components/TypeText';
-import { PROJECTS_DATA, CERTIFICATES_DATA, TECH_STACK_DATA, BACKGROUND_VIDEO_URL, PROFILE_IMAGE_URL } from './data/portfolioData';
-import type { ProjectItem } from './data/portfolioData';
+import { playHoverSound, playClickSound } from './utils/sound';
+import { TypingText } from './components/TypingText';
+import { PROJECTS_DATA, CERTIFICATES_DATA, TECH_STACK_DATA, BACKGROUND_VIDEO_URL, PROFILE_IMAGE_URL } from './data/portfolio';
+import type { ProjectItem } from './data/portfolio';
 //===============
 const EASE_CURVE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-const LanyardCanvas = lazy(() =>
-import('./components/LanyardCanvas').then(({ LanyardCanvas: Component }) => ({
+const Lanyard = lazy(() =>
+import('./components/Lanyard').then(({ Lanyard: Component }) => ({
 default: Component,
 }))
 );
-const GithubHeatmap = lazy(() =>
-import('./components/GithubHeatmap').then(({ GithubHeatmap: Component }) => ({
+const GitHubHeatmap = lazy(() =>
+import('./components/GitHubHeatmap').then(({ GitHubHeatmap: Component }) => ({
 default: Component,
 }))
 );
@@ -467,7 +467,7 @@ pointerEvents: showApp ? 'auto' : 'none',
 >
 {showApp && (
 <Suspense fallback={null}>
-<LanyardCanvas />
+<Lanyard />
 </Suspense>
 )}
 </div>
@@ -551,7 +551,7 @@ color: 'var(--accent)',
 letterSpacing: '0.06em',
 }}
 >
-<TypeText
+<TypingText
 text={[
 'Backend Development',
 'Bot Development',
@@ -1082,7 +1082,7 @@ transition={{ duration: 0.8, delay: 0.2, ease: EASE_CURVE }}
 style={{ marginTop: 20 }}
 >
 <Suspense fallback={null}>
-<GithubHeatmap username="kagenouReal" />
+<GitHubHeatmap username="kagenouReal" />
 </Suspense>
 </motion.div>
 </motion.div>
@@ -2089,7 +2089,7 @@ fetch('/assets/kartu.glb').then((response) => {
 if (!response.ok) throw new Error(`Card model preload failed: HTTP ${response.status}`);
 return response.arrayBuffer();
 }),
-preloadImage('/assets/card-avatar.png'),
+preloadImage('/assets/avatar.png'),
 ];
 void Promise.allSettled(coreAssets).then((results) => {
 for (const result of results) {

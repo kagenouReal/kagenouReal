@@ -2,7 +2,7 @@
 import {useState,useEffect,useRef,useMemo,useCallback} from 'react';
 import type {FC,ElementType,JSX} from 'react';
 //===============
-interface TypeTextProps {
+interface TypingTextProps {
 text: string | string[];
 as?: keyof JSX.IntrinsicElements;
 typingSpeed?: number;
@@ -23,7 +23,7 @@ startOnVisible?: boolean;
 reverseMode?: boolean;
 }
 //===============
-export const TypeText: FC<TypeTextProps> = ({
+export const TypingText: FC<TypingTextProps> = ({
 text,
 as: Tag = 'div',
 typingSpeed = 50,
