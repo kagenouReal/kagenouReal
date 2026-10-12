@@ -1,21 +1,21 @@
 //===============
-import {lazy,Suspense,useState,useEffect,useRef} from 'react';
-import type {MouseEvent,PointerEvent} from 'react';
-import {motion,AnimatePresence,useInView} from 'motion/react';
-import {Code,Code2,Award,Globe,FileText,ArrowUpRight,ArrowRight,ChevronDown,ChevronUp,User,X,ExternalLink,Sparkles,Mail} from 'lucide-react';
-import {playHoverSound,playClickSound} from './utils/soundEffects';
-import {TypeText} from './components/TypeText';
-import {PROJECTS_DATA,CERTIFICATES_DATA,TECH_STACK_DATA,BACKGROUND_VIDEO_URL,PROFILE_IMAGE_URL} from './data/portfolioData';
-import type {ProjectItem} from './data/portfolioData';
+import { lazy, Suspense, useState, useEffect, useRef } from 'react';
+import type { MouseEvent, PointerEvent } from 'react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
+import { Code2, Globe, FileText, ArrowUpRight, ArrowRight, ChevronDown, ChevronUp, User, X, ExternalLink, Sparkles, Mail, GitBranch } from 'lucide-react';
+import { playHoverSound, playClickSound } from './utils/soundEffects';
+import { TypeText } from './components/TypeText';
+import { PROJECTS_DATA, CERTIFICATES_DATA, TECH_STACK_DATA, BACKGROUND_VIDEO_URL, PROFILE_IMAGE_URL } from './data/portfolioData';
+import type { ProjectItem } from './data/portfolioData';
 //===============
 const EASE_CURVE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const LanyardCanvas = lazy(() =>
-import('./components/LanyardCanvas').then(({LanyardCanvas: Component}) => ({
+import('./components/LanyardCanvas').then(({ LanyardCanvas: Component }) => ({
 default: Component,
 }))
 );
 const GithubHeatmap = lazy(() =>
-import('./components/GithubHeatmap').then(({GithubHeatmap: Component}) => ({
+import('./components/GithubHeatmap').then(({ GithubHeatmap: Component }) => ({
 default: Component,
 }))
 );
@@ -23,11 +23,9 @@ default: Component,
 function useVelocityScroll(enabled: boolean) {
 useEffect(() => {
 if (!enabled) return;
-
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const desktop = window.matchMedia('(min-width: 768px) and (pointer: fine)');
 if (reducedMotion.matches) return;
-
 let frameId = 0;
 let targetY = window.scrollY;
 let smoothingWheel = false;
@@ -37,25 +35,21 @@ let velocity = 0;
 const layers = Array.from(document.querySelectorAll<HTMLElement>('[data-scroll-layer]'));
 const layerDepths = layers.map((layer) => Number(layer.dataset.scrollLayer) || 1);
 const originalTransforms = layers.map((layer) => layer.style.transform);
-const isDesktop = {current: desktop.matches};
+const isDesktop = { current: desktop.matches };
 layers.forEach((layer) => {
 layer.style.willChange = 'transform';
 });
-
 const scheduleFrame = () => {
 if (!frameId) frameId = requestAnimationFrame(updateFrame);
 };
-
 const updateFrame = (time: number) => {
 frameId = 0;
 const elapsed = Math.min(time - lastTime, 32);
 lastTime = time;
-
 if (reducedMotion.matches) {
 velocity = 0;
 smoothingWheel = false;
 }
-
 if (smoothingWheel) {
 const currentY = window.scrollY;
 const amount = 1 - Math.exp(-elapsed / 125);
@@ -68,16 +62,13 @@ smoothingWheel = false;
 } else {
 velocity *= Math.exp(-elapsed / 115);
 }
-
 const offset = Math.max(-8, Math.min(8, -velocity * 1.25));
 const mobileScale = isDesktop.current ? 1 : 0.25;
 layers.forEach((layer, index) => {
 layer.style.transform = `translate3d(0, ${offset * layerDepths[index] * mobileScale}px, 0)`;
 });
-
 if (smoothingWheel || Math.abs(velocity) > 0.015) scheduleFrame();
 };
-
 const onScroll = () => {
 const now = performance.now();
 const currentY = window.scrollY;
@@ -87,7 +78,6 @@ lastY = currentY;
 if (!smoothingWheel) targetY = currentY;
 scheduleFrame();
 };
-
 const canScrollInsideTarget = (target: EventTarget | null, deltaY: number) => {
 if (!(target instanceof HTMLElement)) return false;
 let element: HTMLElement | null = target;
@@ -106,7 +96,6 @@ element = element.parentElement;
 }
 return false;
 };
-
 const onWheel = (event: WheelEvent) => {
 if (
 reducedMotion.matches ||
@@ -117,14 +106,12 @@ canScrollInsideTarget(event.target, event.deltaY)
 ) {
 return;
 }
-
 const pixelDelta = Math.abs(event.deltaY);
 const isWheelInput =
 event.deltaMode !== 0 ||
 (pixelDelta >= 80 &&
 (Math.abs(pixelDelta % 100) < 1 || Math.abs(pixelDelta % 120) < 1));
 if (!isWheelInput || !event.cancelable) return;
-
 event.preventDefault();
 const multiplier = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1;
 targetY = Math.max(
@@ -137,7 +124,6 @@ document.documentElement.scrollHeight - innerHeight,
 smoothingWheel = true;
 scheduleFrame();
 };
-
 const stopWheelSmoothing = () => {
 smoothingWheel = false;
 targetY = window.scrollY;
@@ -148,13 +134,11 @@ layer.style.transform = originalTransforms[index];
 });
 }
 };
-
 const onKeyDown = (event: KeyboardEvent) => {
 if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
 stopWheelSmoothing();
 }
 };
-
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('wheel', onWheel, { passive: false });
 window.addEventListener('touchstart', stopWheelSmoothing, { passive: true });
@@ -165,7 +149,6 @@ isDesktop.current = desktop.matches;
 stopWheelSmoothing();
 };
 desktop.addEventListener('change', onDesktopChange);
-
 return () => {
 window.removeEventListener('scroll', onScroll);
 window.removeEventListener('wheel', onWheel);
@@ -269,7 +252,7 @@ setMounted(true);
 let rafId = 0;
 let ticking = false;
 const updateActiveSection = () => {
-const sectionIds = ['home', 'about', 'portfolio', 'contact'];
+const sectionIds = ['home', 'about', 'activity', 'portfolio', 'contact'];
 setScrolled(window.scrollY > 20);
 let bestSection = 'home';
 let bestScore = -1;
@@ -292,7 +275,6 @@ Math.abs(sectionCenter - viewportCenter);
 const score =
 visibilityRatio * 1000 -
 distanceFromCenter;
-
 if (score > bestScore) {
 bestScore = score;
 bestSection = id;
@@ -353,6 +335,7 @@ requestAnimationFrame(step);
 const navItems = [
 { label: 'Home', id: 'home' },
 { label: 'About', id: 'about' },
+{ label: 'Activity', id: 'activity' },
 { label: 'Portfolio', id: 'portfolio' },
 { label: 'Contact', id: 'contact' },
 ];
@@ -403,7 +386,7 @@ return (
 key={item.id}
 href={`#${item.id}`}
 onClick={(e) => smoothScrollTo(e, `#${item.id}`)}
-className={`font-pixel-title nav-link-item ${isActive ? 'pixel-dither-bg' : ''}`}
+className={`font-pixel-title nav-link-item ${isActive ? 'pixel-dither-bg' : ''} ${item.id === 'activity' ? 'hidden md:inline-flex' : ''}`}
 style={{
 fontSize: 12,
 color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
@@ -502,16 +485,14 @@ transition={{ duration: 0.8, ease: EASE_CURVE }}
 style={{ marginBottom: 20 }}
 >
 <span
-className="font-pixel-title modern-card inline-flex items-center gap-2 px-4 py-1.5"
+className="font-pixel-title"
 style={{
-fontSize: 11,
+fontSize: 12,
 color: 'var(--accent)',
-borderColor: 'var(--border-strong)',
-letterSpacing: '0.12em',
-textTransform: 'uppercase',
+letterSpacing: '0.16em',
 }}
 >
-// OPEN TO INTERESTING SHIT
+[ // WELCOME TO MY PORTFOLIO ]
 </span>
 </motion.div>
 <div>
@@ -522,7 +503,7 @@ played
 ? { opacity: 1, scale: 1, y: 0 }
 : { opacity: 0, scale: 0.85, y: 50 }
 }
-transition={{ duration: 0.9, ease: EASE_CURVE }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
 className="font-pixel-title"
 style={{
 fontSize: 'clamp(32px, 5.5vw, 58px)',
@@ -542,7 +523,7 @@ played
 ? { opacity: 1, x: 0, rotate: 0 }
 : { opacity: 0, x: -80, rotate: -4 }
 }
-transition={{ duration: 0.9, delay: 0.15, ease: EASE_CURVE }}
+transition={{ duration: 0.8, delay: 0.15, ease: EASE_CURVE }}
 className="font-pixel-title"
 style={{
 fontSize: 'clamp(32px, 5.5vw, 58px)',
@@ -559,7 +540,7 @@ Developer
 <motion.div
 initial={false}
 animate={played ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
-transition={{ duration: 0.8, delay: 0.3 }}
+transition={{ duration: 0.8, delay: 0.3, ease: EASE_CURVE }}
 style={{ marginBottom: 14 }}
 >
 <span
@@ -586,7 +567,6 @@ cursorBlinkDuration={0.5}
 />
 </span>
 </motion.div>
-
 <motion.div
 initial={false}
 animate={
@@ -594,7 +574,7 @@ played
 ? { opacity: 1, y: 0 }
 : { opacity: 0, y: 40 }
 }
-transition={{ duration: 0.9, delay: 0.45 }}
+transition={{ duration: 0.8, delay: 0.45, ease: EASE_CURVE }}
 style={{ marginBottom: 26, width: '100%', maxWidth: 500 }}
 >
 <p
@@ -648,7 +628,7 @@ padding: '6px 14px',
 <motion.div
 initial={false}
 animate={played ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
-transition={{ duration: 0.8, delay: 0.9 }}
+transition={{ duration: 0.8, delay: 0.9, ease: EASE_CURVE }}
 style={{
 display: 'flex',
 flexDirection: 'column',
@@ -656,47 +636,13 @@ gap: 6,
 marginBottom: 20,
 }}
 >
-<span
-style={{
-fontFamily: "'DM Mono', monospace",
-fontSize: 12.5,
-color: 'var(--text-muted)',
-}}
->
-▼ check the projects before I break something again
-</span>
-<span
-style={{
-fontFamily: "'DM Mono', monospace",
-fontSize: 12.5,
-color: 'var(--text-muted)',
-}}
->
-↗ open to weird projects, cursed ideas, and questionable decisions
-</span>
 </motion.div>
 <motion.div
 initial={false}
 animate={played ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-transition={{ duration: 0.8, delay: 1.0 }}
+transition={{ duration: 0.8, delay: 1.0, ease: EASE_CURVE }}
 className="inline-flex"
 >
-<a
-href="#about"
-onClick={(e) => {
-e.preventDefault();
-document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-}}
-className="modern-card inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/30 bg-zinc-950/80 hover:bg-red-950/30 backdrop-blur-md shadow-lg transition cursor-pointer"
->
-<span
-className="font-pixel-title text-[10px] tracking-widest font-bold uppercase"
-style={{ color: 'var(--accent)' }}
->
-SEE WHAT I BROKE
-</span>
-<span style={{ fontSize: 11, color: 'var(--accent)' }}>▼</span>
-</a>
 </motion.div>
 </div>
 </section>
@@ -712,7 +658,7 @@ hidden: { opacity: 0, y: 35 },
 show: {
 opacity: 1,
 y: 0,
-transition: { duration: 0.85, ease: EASE_CURVE },
+transition: { duration: 0.8, ease: EASE_CURVE },
 },
 };
 const aboutAvatarVariant = {
@@ -720,48 +666,29 @@ hidden: { opacity: 0, x: 50 },
 show: {
 opacity: 1,
 x: 0,
-transition: { duration: 0.9, ease: EASE_CURVE },
+transition: { duration: 0.8, ease: EASE_CURVE },
 },
 };
 //===============
 function AboutSection({ showApp }: { showApp: boolean }) {
 const [avatarError, setAvatarError] = useState(false);
-const heatmapRef = useRef<HTMLDivElement>(null);
-const heatmapInView = useInView(heatmapRef, { once: true, amount: 0.1 });
 const scrollToPortfolio = () => {
 const el = document.getElementById('portfolio');
 if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
-const projectCount = PROJECTS_DATA.length;
-const stats = [
-{
-icon: <Code size={18} style={{ color: 'var(--accent)' }} />,
-value: String(projectCount),
-title: 'PROJECTS',
-},
-{
-icon: <Award size={18} style={{ color: 'var(--accent)' }} />,
-value: String(CERTIFICATES_DATA.length),
-title: 'CERTS',
-},
-{
-icon: <Award size={18} style={{ color: 'var(--accent)' }} />,
-value: String(TECH_STACK_DATA.length),
-title: 'STACK',
-},
-];
 return (
 <section
 id="about"
 data-scroll-layer="0.5"
-className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-6 md:pt-6 md:pb-8 relative z-[2] -mt-2 md:-mt-4"
+className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-6 md:pt-6 md:pb-8 relative z-[2] -mt-12 md:-mt-14"
 style={{ color: 'var(--text-primary)' }}
 >
 <motion.div
 style={{ width: '100%' }}
 initial={{ opacity: 0, y: 35 }}
 whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
-transition={{ duration: 0.8 }}
+viewport={{ once: true, margin: '-80px' }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
 >
 <div
 style={{
@@ -819,7 +746,7 @@ hidden: { opacity: 0, y: 30 },
 show: {
 opacity: 1,
 y: 0,
-transition: { duration: 0.9, delay: 0.2 },
+transition: { duration: 0.8, delay: 0.2, ease: EASE_CURVE },
 },
 }}
 style={{
@@ -870,7 +797,7 @@ variants={{
 hidden: { opacity: 0 },
 show: {
 opacity: 1,
-transition: { duration: 0.8, delay: 0.3 },
+transition: { duration: 0.8, delay: 0.3, ease: EASE_CURVE },
 },
 }}
 className="modern-card"
@@ -888,7 +815,7 @@ width: 'fit-content',
 ▸
 </span>
 <span style={{ color: 'var(--text-primary)' }}>
-“AI writes it. I break it. Somehow it ships.”
+“Wanting to become a skilled programmer but reluctant to code”
 </span>
 </motion.div>
 </motion.div>
@@ -948,76 +875,201 @@ color: 'var(--btn-primary-text)',
 border: '1px solid var(--border-strong)',
 }}
 >
-BACKEND DEV // REVERSE ENGINEER 
+BACKEND DEV // REVERSE ENGINEER&#x20;
 </div>
 </div>
 </motion.div>
 </div>
-<div
-style={{
-display: 'grid',
-gridTemplateColumns: 'repeat(3, 1fr)',
-gap: 16,
-marginTop: 28,
-}}
+</motion.div>
+</section>
+);
+}
+//===============
+function formatRelativePushTime(dateString: string | null) {
+if (!dateString) return 'Unavailable';
+const timestamp = Date.parse(dateString);
+if (!Number.isFinite(timestamp)) return 'Unavailable';
+const seconds = Math.max(0, Math.floor((Date.now() - timestamp) / 1000));
+if (seconds < 60) return 'Just now';
+const minutes = Math.floor(seconds / 60);
+if (minutes < 60) return `${minutes}m ago`;
+const hours = Math.floor(minutes / 60);
+if (hours < 24) return `${hours}h ago`;
+const days = Math.floor(hours / 24);
+if (days < 365) return `${days}d ago`;
+return `${Math.floor(days / 365)}y ago`;
+}
+type GitHubRepoActivity = {
+stargazers_count?: number;
+pushed_at?: string | null;
+};
+function GithubActivitySection({ showApp }: { showApp: boolean }) {
+const heatmapRef = useRef<HTMLDivElement>(null);
+const heatmapInView = useInView(heatmapRef, { once: true, amount: 0.1 });
+const [activityStats, setActivityStats] = useState<{
+publicRepos: number | null;
+stars: number | null;
+latestPush: string | null;
+}>({ publicRepos: null, stars: null, latestPush: null });
+const [statsLoading, setStatsLoading] = useState(true);
+useEffect(() => {
+const controller = new AbortController();
+const loadActivityStats = async () => {
+try {
+const profileResponse = await fetch('https://api.github.com/users/kagenouReal', {
+signal: controller.signal,
+headers: { Accept: 'application/vnd.github+json' },
+});
+if (!profileResponse.ok) {
+throw new Error(`GitHub profile request failed: HTTP ${profileResponse.status}`);
+}
+const profile = (await profileResponse.json()) as { public_repos?: number };
+const totalPages = Math.max(1, Math.ceil((profile.public_repos ?? 0) / 100));
+const repoResponses = await Promise.all(
+Array.from({ length: totalPages }, (_, index) =>
+fetch(
+`https://api.github.com/users/kagenouReal/repos?type=owner&sort=pushed&direction=desc&per_page=100&page=${index + 1}`,
+{
+signal: controller.signal,
+headers: { Accept: 'application/vnd.github+json' },
+},
+),
+),
+);
+const failedResponse = repoResponses.find((response) => !response.ok);
+if (failedResponse) {
+throw new Error(`GitHub repositories request failed: HTTP ${failedResponse.status}`);
+}
+const repoPages = (await Promise.all(
+repoResponses.map((response) => response.json() as Promise<GitHubRepoActivity[]>),
+));
+const repos = repoPages.flat();
+const latestPush = repos.reduce<string | null>((latest, repo) => {
+if (!repo.pushed_at) return latest;
+if (!latest || Date.parse(repo.pushed_at) > Date.parse(latest)) return repo.pushed_at;
+return latest;
+}, null);
+if (!controller.signal.aborted) {
+setActivityStats({
+publicRepos: typeof profile.public_repos === 'number' ? profile.public_repos : repos.length,
+stars: repos.reduce((total, repo) => total + (repo.stargazers_count ?? 0), 0),
+latestPush,
+});
+}
+} catch (error) {
+if (!controller.signal.aborted) {
+console.error('Failed to load GitHub activity stats:', error);
+}
+} finally {
+if (!controller.signal.aborted) setStatsLoading(false);
+}
+};
+void loadActivityStats();
+return () => controller.abort();
+}, []);
+const latestPushDetail = activityStats.latestPush
+? new Date(activityStats.latestPush).toLocaleDateString(undefined, {
+year: 'numeric',
+month: 'short',
+day: 'numeric',
+})
+: statsLoading
+? 'Loading...'
+: 'No push data';
+const stats = [
+{
+icon: <Code2 size={17} style={{ color: 'var(--accent)' }} />,
+value: activityStats.publicRepos === null ? (statsLoading ? '…' : '—') : activityStats.publicRepos.toLocaleString(),
+title: 'PUBLIC REPOS',
+detail: 'Public repositories',
+},
+{
+icon: <Sparkles size={17} style={{ color: 'var(--accent)' }} />,
+value: activityStats.stars === null ? (statsLoading ? '…' : '—') : activityStats.stars.toLocaleString(),
+title: 'REPO STARS',
+detail: 'Stars across public repos',
+},
+{
+icon: <GitBranch size={17} style={{ color: 'var(--accent)' }} />,
+value: activityStats.latestPush
+? formatRelativePushTime(activityStats.latestPush)
+: statsLoading
+? '…'
+: '—',
+title: 'LATEST PUSH',
+detail: latestPushDetail,
+},
+];
+return (
+<section
+id="activity"
+data-scroll-layer="0.65"
+className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-8 md:pt-6 md:pb-10 relative z-[4] mt-4 md:mt-6"
+style={{ color: 'var(--text-primary)' }}
 >
+<motion.div
+initial={{ opacity: 0, y: 35 }}
+whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
+viewport={{ once: true, margin: '-80px' }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
+>
+<div className="text-center mb-8 md:mb-10">
+<h2
+className="font-pixel-title text-2xl md:text-4xl font-bold mb-3"
+style={{ color: 'var(--text-primary)' }}
+>
+Activity &amp; Stats
+</h2>
+<p
+className="max-w-xl mx-auto text-sm md:text-base leading-relaxed"
+style={{ color: 'var(--text-secondary)' }}
+>
+GitHub stats and contribution history.
+</p>
+</div>
+<div className="grid grid-cols-3 gap-2 sm:gap-4">
 {stats.map((stat, idx) => (
 <motion.div
-key={idx}
+key={stat.title}
 initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30, y: 20 }}
 whileInView={showApp ? { opacity: 1, x: 0, y: 0 } : undefined}
-transition={{ duration: 0.65, delay: 0.05 * idx }}
+viewport={{ once: true, margin: '-40px' }}
+transition={{ duration: 0.8, delay: 0.05 * idx, ease: EASE_CURVE }}
 whileHover={{ y: -3 }}
-onClick={scrollToPortfolio}
-className="modern-card"
-style={{
-position: 'relative',
-padding: '18px',
-cursor: 'pointer',
-}}
+className="modern-card flex min-w-0 flex-col items-center justify-center gap-2 p-2.5 text-center sm:flex-row sm:justify-start sm:gap-3 sm:p-5 sm:text-left"
+style={{ minHeight: 94 }}
 >
 <div
+className="flex h-7 w-7 shrink-0 items-center justify-center sm:h-10 sm:w-10"
 style={{
-width: 40,
-height: 40,
-border: '2px solid var(--border)',
-background: 'var(--bg-secondary)',
-display: 'flex',
-alignItems: 'center',
-justifyContent: 'center',
-marginBottom: 12,
+border: '1px solid var(--border)',
+backgroundColor: 'var(--bg-secondary)',
 }}
 >
 {stat.icon}
 </div>
+<div className="min-w-0 flex-1">
 <div
 className="font-pixel-title"
 style={{
-position: 'absolute',
-top: 20,
-right: 20,
-fontSize: 22,
+fontSize: 'clamp(13px, 2vw, 24px)',
+lineHeight: 1.15,
 fontWeight: 700,
 color: 'var(--accent)',
+overflowWrap: 'anywhere',
 }}
 >
 {stat.value}
 </div>
 <div
-className="font-pixel-title"
-style={{ fontSize: 11.5, letterSpacing: '0.08em', color: 'var(--text-primary)' }}
+className="font-pixel-title mt-1 text-[7px] leading-tight sm:text-[9px] tracking-wider"
+style={{ color: 'var(--text-primary)' }}
 >
 {stat.title}
 </div>
-<div
-style={{
-position: 'absolute',
-bottom: 16,
-right: 16,
-color: 'var(--accent)',
-}}
->
-<ArrowUpRight size={16} />
+<div className="mt-1 hidden text-[10px] leading-snug sm:block" style={{ color: 'var(--text-muted)' }}>
+{stat.detail}
+</div>
 </div>
 </motion.div>
 ))}
@@ -1026,7 +1078,7 @@ color: 'var(--accent)',
 ref={heatmapRef}
 initial={{ opacity: 0, y: 30 }}
 animate={showApp && heatmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-transition={{ duration: 0.7, delay: 0.2 }}
+transition={{ duration: 0.8, delay: 0.2, ease: EASE_CURVE }}
 style={{ marginTop: 20 }}
 >
 <Suspense fallback={null}>
@@ -1054,12 +1106,13 @@ return (
 <motion.div
 initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30, y: 20 }}
 whileInView={animateOnReveal ? { opacity: 1, x: 0, y: 0 } : undefined}
-transition={{ duration: 0.65, delay: 0.05 * index }}
+viewport={{ once: true, margin: '-40px' }}
+transition={{ duration: 0.8, delay: 0.05 * index, ease: EASE_CURVE }}
 whileHover={{ y: -3 }}
-className="group relative modern-card p-4 sm:p-5 flex flex-col min-h-[290px]"
+className="group relative modern-card p-2 sm:p-5 flex flex-col min-h-[220px] sm:min-h-[290px]"
 >
 <div
-className="w-full h-36 overflow-hidden mb-3.5 relative"
+className="w-full h-16 sm:h-36 overflow-hidden mb-2 sm:mb-3.5 relative"
 style={{
 border: '2px solid var(--border)',
 backgroundColor: 'var(--bg-secondary)',
@@ -1095,37 +1148,37 @@ QUEST #{index + 1}
 </div>
 </div>
 <h3
-className="font-pixel-title text-[15px] mb-2 leading-tight"
+className="font-pixel-title text-[10px] sm:text-[15px] mb-1 sm:mb-2 leading-tight"
 style={{ color: 'var(--text-primary)' }}
 >
 {project.title}
 </h3>
 <p
-className="text-[12.5px] leading-relaxed line-clamp-2 min-h-[38px]"
+className="text-[9px] sm:text-[12.5px] leading-relaxed line-clamp-2 min-h-[28px] sm:min-h-[38px]"
 style={{ color: 'var(--text-secondary)' }}
 >
 {project.description}
 </p>
-<div className="mt-auto pt-4 flex items-center justify-between">
+<div className="mt-auto pt-2 sm:pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-0">
 {project.live_url ? (
 <a
 href={project.live_url}
 target="_blank"
 rel="noopener noreferrer"
-className="font-pixel-title flex items-center gap-1.5 text-[11px] transition-all hover:translate-x-0.5"
+className="font-pixel-title flex items-center gap-1 text-[7px] sm:gap-1.5 sm:text-[11px] transition-all hover:translate-x-0.5"
 style={{ color: 'var(--accent)' }}
 >
 GitHub Repo
 <ArrowUpRight size={14} />
 </a>
 ) : (
-<div className="text-[12px]" style={{ color: 'var(--text-muted)' }}>
+<div className="text-[9px] sm:text-[12px]" style={{ color: 'var(--text-muted)' }}>
 No Link
 </div>
 )}
 <button
 onClick={() => onSelectDetail(project)}
-className="modern-btn-secondary px-3.5 py-1.5 flex items-center gap-1.5 text-[11px] cursor-pointer"
+className="modern-btn-secondary px-1.5 py-1 sm:px-3.5 sm:py-1.5 flex items-center gap-1 text-[8px] sm:gap-1.5 sm:text-[11px] cursor-pointer"
 >
 Details
 <ArrowRight size={12} />
@@ -1136,10 +1189,6 @@ Details
 }
 //===============
 function PortfolioSection({ showApp }: { showApp: boolean }) {
-const [isPhone, setIsPhone] = useState(false);
-useEffect(() => {
-setIsPhone(window.screen.width < 768);
-}, []);
 const [activeTab, setActiveTab] = useState<'projects' | 'certificates' | 'techstack'>('projects');
 const [lightboxOpen, setLightboxOpen] = useState(false);
 const [lightboxImage, setLightboxImage] = useState('');
@@ -1197,7 +1246,7 @@ animate={{ scale: 1, opacity: 1, y: 0 }}
 exit={{ scale: 0.94, opacity: 0, y: 20 }}
 transition={{ duration: 0.3, ease: EASE_CURVE }}
 onClick={(e) => e.stopPropagation()}
-className="relative w-full max-w-2xl modern-card p-6 md:p-8"
+className="relative w-full max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain custom-scroll modern-card p-6 md:p-8"
 style={{ color: 'var(--text-primary)' }}
 >
 <button
@@ -1304,32 +1353,34 @@ Close
 <section
 id="portfolio"
 data-scroll-layer="0.75"
-className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-8 md:pt-6 md:pb-10 relative z-[3] -mt-2 md:-mt-4"
+className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-8 md:pt-6 md:pb-10 relative z-[4] mt-2 md:mt-4"
 style={{ color: 'var(--text-primary)' }}
 >
 <motion.div
 initial={{ opacity: 0, y: 35 }}
 whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
-transition={{ duration: 0.8 }}
+viewport={{ once: true, margin: '-80px' }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
 className="text-center mb-7"
 >
 <h1
 className="font-pixel-title text-2xl md:text-4xl font-bold mb-3"
 style={{ color: 'var(--text-primary)' }}
 >
-Things I Somehow Shipped
+Portfolio Showcase
 </h1>
 <p
 className="max-w-xl mx-auto text-sm md:text-base"
 style={{ color: 'var(--text-secondary)' }}
 >
-Some things I built, broke, fixed, and somehow decided to keep.
+Stuff I've made.
 </p>
 </motion.div>
 <motion.div
 initial={{ opacity: 0, y: 35 }}
 whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
-transition={{ duration: 0.8 }}
+viewport={{ once: true, margin: '-80px' }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
 className="flex justify-center mb-8"
 >
 <div className="w-full max-w-2xl modern-card p-1.5 flex gap-1.5">
@@ -1342,8 +1393,7 @@ onClick={() => {
 setActiveTab(tab);
 if (tab !== 'projects') setShowAllProjects(false);
 }}
-className={`flex-1 font-pixel-title py-3 text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
-!isActive ? 'pixel-dither-hover' : ''
+className={`flex-1 font-pixel-title py-3 text-xs sm:text-sm transition-all duration-200 cursor-pointer ${!isActive ? 'pixel-dither-hover' : ''
 }`}
 style={
 isActive
@@ -1381,9 +1431,7 @@ transition={{ duration: 0.35 }}
 <motion.div
 layout
 transition={{ layout: { duration: 0.6, ease: EASE_CURVE } }}
-className={`grid md:grid-cols-2 ${
-isPhone ? 'min-[65rem]:grid-cols-3' : 'xl:grid-cols-3'
-} gap-5 px-1`}
+className="grid grid-cols-3 gap-2 sm:gap-5 px-1"
 >
 <AnimatePresence mode="popLayout">
 {visibleProjects.map((project, idx) => (
@@ -1431,25 +1479,24 @@ className="modern-btn-secondary px-6 py-3 text-xs flex items-center gap-2 cursor
 )}
 {activeTab === 'certificates' && (
 <div
-className={`grid md:grid-cols-2 ${
-isPhone ? 'min-[65rem]:grid-cols-3' : 'xl:grid-cols-3'
-} gap-5 px-1`}
+className="grid grid-cols-3 gap-2 sm:gap-5 px-1"
 >
 {CERTIFICATES_DATA.map((cert, idx) => (
 <motion.div
 key={cert.id}
 initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30, y: 20 }}
 whileInView={showApp ? { opacity: 1, x: 0, y: 0 } : undefined}
-transition={{ duration: 0.65, delay: 0.05 * idx }}
+viewport={{ once: true, margin: '-40px' }}
+transition={{ duration: 0.8, delay: 0.05 * idx, ease: EASE_CURVE }}
 whileHover={{ y: -3 }}
 onClick={() => {
 setLightboxImage(cert.image_url);
 setLightboxOpen(true);
 }}
-className="group cursor-pointer modern-card p-4"
+className="group cursor-pointer modern-card p-2 sm:p-4"
 >
 <div
-className="overflow-hidden h-52"
+className="overflow-hidden h-16 sm:h-52"
 style={{
 border: '2px solid var(--border)',
 backgroundColor: 'var(--bg-secondary)',
@@ -1465,7 +1512,7 @@ className="w-full h-full object-cover group-hover:scale-105 transition duration-
 />
 </div>
 <h3
-className="font-pixel-title mt-3 text-[13px] text-center"
+className="font-pixel-title mt-2 sm:mt-3 text-[9px] sm:text-[13px] leading-tight text-center"
 style={{ color: 'var(--text-primary)' }}
 >
 {cert.title}
@@ -1506,7 +1553,8 @@ style={{ color: 'var(--text-muted)' }}
 key={item.id}
 initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30, y: 20 }}
 whileInView={showApp ? { opacity: 1, x: 0, y: 0 } : undefined}
-transition={{ duration: 0.65, delay: 0.05 * idx }}
+viewport={{ once: true, margin: '-40px' }}
+transition={{ duration: 0.8, delay: 0.05 * idx, ease: EASE_CURVE }}
 whileHover={{ y: -2 }}
 className="group modern-card pixel-dither-hover flex items-center gap-3 min-h-[88px] w-full p-3"
 >
@@ -1581,7 +1629,7 @@ height="1em"
 width="1em"
 xmlns="http://www.w3.org/2000/svg"
 >
-<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
 </svg>
 );
 }
@@ -1597,7 +1645,7 @@ height="1em"
 width="1em"
 xmlns="http://www.w3.org/2000/svg"
 >
-<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.39-.51 1.08-.78 4.23-1.84 7.05-3.05 8.45-3.63 4.02-1.68 4.86-1.97 5.4-1.98.12 0 .39.03.56.17.14.12.18.28.2.45-.02.07-.02.13-.04.2z"/>
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.39-.51 1.08-.78 4.23-1.84 7.05-3.05 8.45-3.63 4.02-1.68 4.86-1.97 5.4-1.98.12 0 .39.03.56.17.14.12.18.28.2.45-.02.07-.02.13-.04.2z" />
 </svg>
 );
 }
@@ -1609,7 +1657,6 @@ title: 'WhatsApp',
 user: 'wa.me/kagenouReal',
 icon: WhatsAppIcon,
 link: 'https://wa.me/kagenouReal',
-highlight: true,
 desc: 'Usually the fastest way to reach me',
 },
 {
@@ -1617,23 +1664,20 @@ title: 'Telegram',
 user: 't.me/kagenouonly',
 icon: TelegramIcon,
 link: 'https://t.me/kagenouonly',
-highlight: false,
-desc: 'For random shit & actual conversations',
+desc: 'For random chats',
 },
 {
 title: 'Email',
 user: 'kagenoureal@gmail.com',
 icon: Mail,
 link: 'mailto:kagenoureal@gmail.com',
-highlight: false,
-desc: 'For stuff that needs an email',
+desc: 'For email stuff',
 },
 {
 title: 'TikTok',
 user: '@veryy_lazyy',
 icon: TikTokIcon,
 link: 'https://tiktok.com/@veryy_lazyy',
-highlight: false,
 desc: 'I have a TikTok, apparently.',
 },
 ];
@@ -1641,7 +1685,8 @@ return (
 <motion.div
 initial={{ opacity: 0, y: 20 }}
 whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
-transition={{ duration: 0.8 }}
+viewport={{ once: true, margin: '-60px' }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
 className="modern-card w-full p-6 sm:p-7 md:p-8 flex flex-col justify-between"
 >
 <div>
@@ -1657,9 +1702,6 @@ style={{ color: 'var(--accent)' }}
 Where to Find Me
 </h2>
 </div>
-<p className="text-base mb-7 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-Open to weird projects, collabs, automation ideas, API bullshit, and technically cursed experiments.
-</p>
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
 {socialGridLinks.map((item, idx) => {
 const IconComp = item.icon;
@@ -1671,11 +1713,12 @@ target="_blank"
 rel="noopener noreferrer"
 initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30, y: 20 }}
 whileInView={showApp ? { opacity: 1, x: 0, y: 0 } : undefined}
-transition={{ duration: 0.65, delay: 0.05 * idx }}
+viewport={{ once: true, margin: '-40px' }}
+transition={{ duration: 0.8, delay: 0.05 * idx, ease: EASE_CURVE }}
 className="group modern-card min-h-[76px] min-w-0 p-4 flex items-center justify-between gap-3 transition-transform hover:-translate-y-0.5"
 style={{
-backgroundColor: item.highlight ? 'var(--bg-badge)' : 'var(--bg-card)',
-borderColor: item.highlight ? 'var(--accent)' : 'var(--border)',
+backgroundColor: 'var(--bg-card)',
+borderColor: 'var(--border)',
 }}
 >
 <div className="flex min-w-0 items-center gap-4">
@@ -1684,7 +1727,7 @@ className="w-11 h-11 shrink-0 flex items-center justify-center font-pixel-title 
 style={{
 border: '2px solid var(--border)',
 backgroundColor: 'var(--bg-secondary)',
-color: item.highlight ? '#ffffff' : 'var(--accent)',
+color: 'var(--accent)',
 }}
 >
 <IconComp />
@@ -1694,21 +1737,12 @@ color: item.highlight ? '#ffffff' : 'var(--accent)',
 <p className="font-pixel-title text-sm" style={{ color: 'var(--text-primary)' }}>
 {item.title}
 </p>
-{item.highlight && (
-<span
-className="font-pixel-title text-[10px] px-2 py-0.5"
-style={{
-backgroundColor: 'var(--accent)',
-color: '#ffffff',
-fontWeight: 700,
-}}
->
-PRIMARY
-</span>
-)}
 </div>
 <p className="break-all text-xs" style={{ color: 'var(--text-secondary)' }}>
 {item.user}
+</p>
+<p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+{item.desc}
 </p>
 </div>
 </div>
@@ -1726,16 +1760,6 @@ color: 'var(--accent)',
 })}
 </div>
 </div>
-<div
-className="mt-7 pt-5 flex flex-wrap items-center justify-between gap-3 text-xs"
-style={{ borderTop: '2px solid var(--border)', color: 'var(--text-muted)' }}
->
-<span className="font-pixel-title text-[11px] flex items-center gap-2">
-<Sparkles size={12} style={{ color: 'var(--accent)' }} />
-OPEN TO WEIRD SHIT
-</span>
-<span className="font-pixel-title text-[11px]">PROJECTS • COLLABS • CURSED IDEAS</span>
-</div>
 </motion.div>
 );
 }
@@ -1745,34 +1769,35 @@ return (
 <section
 id="contact"
 data-scroll-layer="1"
-className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-10 md:pt-6 md:pb-12 relative z-[4] -mt-2 md:-mt-4"
+className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-10 md:pt-6 md:pb-12 relative z-[5] mt-2 md:mt-4"
 style={{ color: 'var(--text-primary)' }}
 >
 <motion.div
 initial={{ opacity: 0, y: 35 }}
 whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
-transition={{ duration: 0.8 }}
+viewport={{ once: true, margin: '-80px' }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
 className="text-center mb-8 sm:mb-10 lg:mb-12"
 >
 <motion.h1
 initial={{ opacity: 0, y: 35 }}
 whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
-transition={{ duration: 0.7, ease: EASE_CURVE }}
+transition={{ duration: 0.8, ease: EASE_CURVE }}
 viewport={{ once: true }}
 className="font-pixel-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4"
 style={{ color: 'var(--text-primary)' }}
 >
-Got a Weird Project?
+Find Me Online
 </motion.h1>
 <motion.p
 initial={{ opacity: 0, y: 25 }}
 whileInView={showApp ? { opacity: 1, y: 0 } : undefined}
-transition={{ duration: 0.7, delay: 0.1, ease: EASE_CURVE }}
+transition={{ duration: 0.8, delay: 0.1, ease: EASE_CURVE }}
 viewport={{ once: true }}
 className="text-sm sm:text-base max-w-xl sm:max-w-2xl mx-auto leading-relaxed"
 style={{ color: 'var(--text-secondary)' }}
 >
-Got a project, cursed API, or something that needs automating? Hit me up.
+My socials and other links.
 </motion.p>
 </motion.div>
 <div className="w-full">
@@ -1782,7 +1807,7 @@ Got a project, cursed API, or something that needs automating? Hit me up.
 className="mt-12 text-center font-pixel-title text-xs"
 style={{ color: 'var(--text-muted)' }}
 >
-© 2026 Kagenou — still shipping somehow.
+© 2026 Kagenou.
 </div>
 </section>
 );
@@ -1883,20 +1908,7 @@ fontWeight: 700,
 color: 'var(--text-primary)',
 }}
 >
-Welcome
-</motion.span>
-<motion.span
-initial={{ opacity: 0, x: -80 }}
-animate={{ opacity: 1, x: 0 }}
-transition={{ delay: 1.1, duration: 1.2, ease: EASE_CURVE }}
-className="font-pixel-title"
-style={{
-fontSize: 'clamp(16px, 2.8vw, 24px)',
-fontWeight: 700,
-color: 'var(--accent)',
-}}
->
-to the mess
+Welcome To
 </motion.span>
 </div>
 <motion.h1
@@ -1914,7 +1926,7 @@ whiteSpace: 'nowrap',
 color: 'var(--accent)',
 }}
 >
-Kagenou
+My Portfolio
 </motion.h1>
 </div>
 <motion.div
@@ -1948,7 +1960,7 @@ letterSpacing: '0.12em',
 pointerEvents: 'none',
 }}
 >
-↑ SWIPE UP AND SEE WHAT I BROKE
+↑ SWIPE UP
 </motion.div>
 </div>
 );
@@ -2150,6 +2162,7 @@ onError={() => console.error('Failed to load background sound: /assets/backgroun
 <Navbar showApp={showApp} />
 <HeroSection showApp={showApp} />
 <AboutSection showApp={showApp} />
+<GithubActivitySection showApp={showApp} />
 <PortfolioSection showApp={showApp} />
 <ContactSection showApp={showApp} />
 </div>

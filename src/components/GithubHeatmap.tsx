@@ -194,12 +194,11 @@ weekEls
 .attr('stroke', (d) => borderColorScale(d.level))
 .attr('stroke-width', 1)
 .style('cursor', 'pointer')
-.style('transition', 'transform 0.1s ease, filter 0.1s ease')
+.style('transition', 'filter 0.1s ease')
 .on('mouseenter', function (_, d) {
 d3.select(this)
 .attr('stroke', '#ffffff')
 .attr('stroke-width', 2)
-.style('transform', 'scale(1.18)')
 .style('filter', 'drop-shadow(0 0 4px #ef4444)');
 const rect = containerRef.current?.getBoundingClientRect();
 if (rect) {
@@ -215,7 +214,6 @@ y: cellRect.top - rect.top - 8,
 d3.select(this)
 .attr('stroke', borderColorScale(d.level))
 .attr('stroke-width', 1)
-.style('transform', 'scale(1)')
 .style('filter', 'none');
 setHoveredDay(null);
 });
@@ -231,7 +229,7 @@ GITHUB ACTIVITY
 </h3>
 </div>
 <p className="text-xs text-[var(--text-secondary)] font-mono">
-evidence of poor life choices
+@kagenouReal
 <a
 href={`https://github.com/${username}`}
 target="_blank"
@@ -279,7 +277,7 @@ title="Refresh Activity"
 {loading ? (
 <div className="h-36 w-full flex items-center justify-center gap-2 font-pixel-title text-xs text-[var(--text-muted)]">
 <RefreshCw size={16} className="animate-spin text-[var(--accent)]" />
-Compiling D3 Activity Map...
+Loading contributions...
 </div>
 ) : error ? (
 <div className="h-36 w-full flex items-center justify-center text-center text-xs text-[var(--text-muted)]">
@@ -291,7 +289,7 @@ Compiling D3 Activity Map...
 </div>
 <div className="flex items-center justify-between mt-3 pt-2 border-t border-[var(--border)] text-[11px] text-[var(--text-muted)]">
 <span className="font-pixel-title text-[10px] text-[var(--accent)]">
-D3.JS HEATMAP ENGINE
+CONTRIBUTIONS // GITHUB
 </span>
 <div className="flex items-center gap-1.5">
 <span>Less</span>
