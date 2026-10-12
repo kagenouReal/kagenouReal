@@ -186,7 +186,7 @@ anchorX = 0.2;
 } else if (w < 1024) {
 anchorX = 1.2;
 } else if (w < 1280) {
-anchorX = 1.7;
+anchorX = 1.2;
 } else {
 anchorX = 2.1;
 }
