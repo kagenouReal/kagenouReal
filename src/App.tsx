@@ -196,7 +196,7 @@ return (
 className="fixed top-0 left-0 z-0 overflow-hidden pointer-events-none transition-colors duration-300"
 style={{
 width: '100vw',
-height: '100svh',
+height: '100vh',
 backgroundColor: 'var(--bg-primary)',
 }}
 >
