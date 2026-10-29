@@ -16,6 +16,6 @@
 
 <div align="center">
 
-> i'm from malaysia btw 🇲🇾
+> i'm from malaysia btw
 
 </div>
