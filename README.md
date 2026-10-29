@@ -16,6 +16,6 @@
 
 <div align="center">
 
-> just coding, reversing, and vibing.
+> i'm from malaysia btw 🇲🇾
 
 </div>
